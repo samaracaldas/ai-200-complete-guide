@@ -2,7 +2,7 @@
 
 Guia interativo de estudos para a certificação **Azure AI Cloud Developer Associate (AI-200)** da Microsoft.
 
-🔗 **[Acessar o guia](https://samaracaldas.github.io/ai200-guia)**
+🔗 **[Acessar o guia](https://samaracaldas.github.io/ai-200-complete-guide/)**
 
 ---
 
@@ -32,7 +32,7 @@ Guia interativo de estudos para a certificação **Azure AI Cloud Developer Asso
 
 Abra o `index.html` diretamente no navegador — sem instalação, sem dependências.
 
-Ou acesse online: **[samaracaldas.github.io/ai200-guia](https://samaracaldas.github.io/ai200-guia)**
+Ou acesse online: **[samaracaldas.github.io/ai-200-complete-guide/](https://samaracaldas.github.io/ai-200-complete-guide/)**
 
 ## Sobre o exame
 
