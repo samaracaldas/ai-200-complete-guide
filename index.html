@@ -1,0 +1,1872 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-200 — Guia Completo de Estudos</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#06060f;--sur:#0d0d1c;--card:#111120;--card2:#161628;
+  --bor:#1e1e35;--bor2:#2a2a46;
+  --a:#5b8fff;--a2:#a78bfa;--a3:#34d399;--w:#fbbf24;--r:#f87171;
+  --t:#e8e8f4;--m:#6a6a98;--m2:#9898c8;--cb:#080814;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--t);font-family:'Inter',sans-serif;line-height:1.7;display:flex;min-height:100vh;}
+
+/* SIDEBAR */
+#sidebar{width:268px;flex-shrink:0;background:var(--sur);border-right:1px solid var(--bor);height:100vh;position:sticky;top:0;overflow-y:auto;display:flex;flex-direction:column;scrollbar-width:thin;scrollbar-color:var(--bor2) transparent;}
+#sidebar::-webkit-scrollbar{width:3px;}
+#sidebar::-webkit-scrollbar-thumb{background:var(--bor2);}
+.sb-head{padding:18px 16px 12px;border-bottom:1px solid var(--bor);}
+.sb-logo{font-size:17px;font-weight:800;color:var(--a);font-family:'JetBrains Mono',monospace;}
+.sb-sub{font-size:10px;color:var(--m);margin-top:2px;font-family:'JetBrains Mono',monospace;}
+.sb-prog{margin:10px 13px;background:var(--card);border:1px solid var(--bor);border-radius:7px;padding:9px 11px;}
+.sb-prog-lbl{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--m);font-family:'JetBrains Mono',monospace;margin-bottom:5px;}
+.sb-bar{height:4px;background:var(--bor2);border-radius:2px;overflow:hidden;}
+.sb-fill{height:100%;background:linear-gradient(90deg,var(--a),var(--a2));border-radius:2px;width:0%;transition:width .4s;}
+.sb-prog-txt{font-size:10px;color:var(--m2);margin-top:4px;font-family:'JetBrains Mono',monospace;}
+.sb-search{margin:4px 12px 8px;position:relative;}
+.sb-search input{width:100%;background:var(--card);border:1px solid var(--bor2);border-radius:6px;padding:7px 10px 7px 28px;font-size:11px;color:var(--t);font-family:'Inter',sans-serif;outline:none;}
+.sb-search input:focus{border-color:rgba(91,143,255,.4);}
+.sb-search input::placeholder{color:var(--m);}
+.sb-si{position:absolute;left:9px;top:8px;color:var(--m);font-size:12px;pointer-events:none;}
+.sb-body{flex:1;overflow-y:auto;padding-bottom:20px;}
+.sb-grp{padding:11px 16px 3px;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--m);font-family:'JetBrains Mono',monospace;display:flex;align-items:center;gap:5px;}
+.sb-grp::after{content:'';flex:1;height:1px;background:var(--bor);}
+.sb-item{display:flex;align-items:center;gap:7px;padding:5px 16px;font-size:11px;color:var(--m2);cursor:pointer;border-left:2px solid transparent;transition:all .15s;text-decoration:none;}
+.sb-item:hover{background:rgba(91,143,255,.06);color:var(--t);}
+.sb-item.active{background:rgba(91,143,255,.09);color:var(--a);border-left-color:var(--a);}
+.sb-chk{width:13px;height:13px;border-radius:3px;border:1.5px solid var(--bor2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:8px;cursor:pointer;transition:all .2s;}
+.sb-chk.done{background:rgba(52,211,153,.15);border-color:var(--a3);color:var(--a3);}
+.sb-num{font-size:9px;color:var(--m);font-family:'JetBrains Mono',monospace;min-width:16px;}
+.sb-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+
+/* CONTENT */
+#content{flex:1;min-width:0;}
+.c-inner{max-width:780px;padding:44px 44px 100px;margin:0 auto;}
+
+/* HERO */
+.hero{background:linear-gradient(145deg,#09091c,#0b0a1e);border:1px solid var(--bor);border-radius:14px;padding:30px 34px;margin-bottom:40px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-50px;right:-50px;width:260px;height:260px;background:radial-gradient(circle,rgba(91,143,255,.08),transparent 70%);pointer-events:none;}
+.hero-ey{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--a);font-family:'JetBrains Mono',monospace;margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+.hero-ey::before{content:'';width:18px;height:1px;background:var(--a);}
+.hero h1{font-size:clamp(22px,4vw,34px);font-weight:800;line-height:1.1;margin-bottom:11px;letter-spacing:-.4px;}
+.hero h1 span{background:linear-gradient(135deg,var(--a),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-desc{font-size:13px;color:var(--m2);line-height:1.8;max-width:540px;margin-bottom:22px;}
+.hero-stats{display:flex;gap:10px;flex-wrap:wrap;}
+.hstat{background:rgba(255,255,255,.03);border:1px solid var(--bor);border-radius:9px;padding:10px 15px;text-align:center;}
+.hstat-v{font-size:20px;font-weight:800;color:var(--a);}
+.hstat-l{font-size:9px;color:var(--m);text-transform:uppercase;letter-spacing:.07em;font-family:'JetBrains Mono',monospace;margin-top:2px;}
+
+/* HOW TO */
+.how-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:9px;margin-bottom:10px;}
+.how-card{background:var(--card);border:1px solid var(--bor);border-radius:9px;padding:13px;}
+.how-icon{font-size:19px;margin-bottom:7px;}
+.how-title{font-size:11px;font-weight:700;margin-bottom:3px;}
+.how-desc{font-size:11px;color:var(--m);line-height:1.5;}
+
+/* SECTION TITLE */
+.sec-title{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--m);font-family:'JetBrains Mono',monospace;padding:6px 0 12px;margin-top:48px;border-bottom:1px solid var(--bor);}
+
+/* TOPIC */
+.topic{scroll-margin-top:18px;margin-bottom:52px;}
+.topic-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:22px;}
+.topic-num{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:800;color:var(--bor2);line-height:1;flex-shrink:0;min-width:46px;}
+.topic-meta{flex:1;}
+.topic-tag{display:inline-flex;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-family:'JetBrains Mono',monospace;padding:3px 8px;border-radius:3px;margin-bottom:6px;}
+.tag-b{background:rgba(91,143,255,.13);color:var(--a);}
+.tag-p{background:rgba(167,139,250,.13);color:var(--a2);}
+.tag-g{background:rgba(52,211,153,.13);color:var(--a3);}
+.tag-y{background:rgba(251,191,36,.13);color:var(--w);}
+.topic h2{font-size:22px;font-weight:800;line-height:1.15;letter-spacing:-.3px;margin-bottom:5px;}
+.topic-sum{font-size:13px;color:var(--m2);line-height:1.75;}
+.done-btn{flex-shrink:0;width:28px;height:28px;border-radius:6px;border:1.5px solid var(--bor2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--bor2);transition:all .2s;}
+.done-btn.done{border-color:var(--a3);background:rgba(52,211,153,.15);color:var(--a3);}
+
+/* BLOCK TITLE */
+.blk-t{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--m);font-family:'JetBrains Mono',monospace;margin:18px 0 9px;display:flex;align-items:center;gap:7px;}
+.blk-t::after{content:'';flex:1;height:1px;background:var(--bor);}
+
+/* CONCEPT BOX */
+.cb{background:var(--card);border:1px solid var(--bor);border-radius:9px;padding:15px 18px;margin-bottom:10px;}
+.cb h4{font-size:13px;font-weight:700;margin-bottom:7px;}
+.cb p{font-size:12px;color:#9898c8;line-height:1.8;white-space:pre-line;}
+
+/* CODE */
+.code-wrap{background:var(--cb);border:1px solid var(--bor2);border-radius:9px;overflow:hidden;margin:11px 0;}
+.code-head{display:flex;align-items:center;padding:7px 13px;background:rgba(255,255,255,.02);border-bottom:1px solid var(--bor);}
+.code-lbl{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--m);font-family:'JetBrains Mono',monospace;}
+.code-dots{display:flex;gap:4px;margin:0 8px 0 auto;}
+.code-dot{width:7px;height:7px;border-radius:50%;}
+.copy-btn{background:none;border:1px solid var(--bor2);border-radius:4px;padding:2px 8px;font-size:9px;color:var(--m);cursor:pointer;font-family:'JetBrains Mono',monospace;letter-spacing:.05em;transition:color .2s;}
+.copy-btn:hover{color:var(--a3);}
+.code-wrap pre{padding:14px 16px;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.75;overflow-x:auto;color:#c0c8ee;margin:0;}
+
+/* TABLE */
+.tw{background:var(--card);border:1px solid var(--bor);border-radius:9px;overflow:hidden;margin:10px 0;}
+.tw table{width:100%;border-collapse:collapse;font-size:11px;}
+.tw th{background:var(--card2);color:var(--m2);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-family:'JetBrains Mono',monospace;padding:9px 12px;text-align:left;border-bottom:2px solid var(--bor2);}
+.tw td{padding:8px 12px;border-bottom:1px solid var(--bor);color:#9090c0;vertical-align:top;line-height:1.5;}
+.tw tr:last-child td{border-bottom:none;}
+.tw td:first-child{color:var(--t);font-weight:600;}
+
+/* BOXES */
+.box{border-radius:8px;padding:13px 15px;margin:10px 0;font-size:12px;line-height:1.7;}
+.box-lbl{font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-family:'JetBrains Mono',monospace;margin-bottom:7px;}
+.b-b{background:rgba(91,143,255,.06);border:1px solid rgba(91,143,255,.18);}
+.b-b .box-lbl{color:var(--a);}
+.b-b p{color:#8888b8;}
+.b-y{background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.18);}
+.b-y .box-lbl{color:var(--w);}
+.b-y p{color:#a09060;}
+.b-g{background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.18);}
+.b-g .box-lbl{color:var(--a3);}
+.b-g p{color:#70a088;}
+
+/* ANALOGY */
+.analogy{background:linear-gradient(135deg,rgba(91,143,255,.06),rgba(167,139,250,.06));border:1px solid rgba(167,139,250,.2);border-radius:9px;padding:13px 16px;margin:10px 0;}
+.analogy .al{font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--a2);font-family:'JetBrains Mono',monospace;margin-bottom:6px;}
+.analogy p{font-size:12px;color:#a898c8;line-height:1.75;}
+
+/* TACTIC */
+.tactic{border-radius:9px;padding:13px 15px;margin:10px 0;border-left-width:3px;border-left-style:solid;}
+.tactic .tl{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;font-family:'JetBrains Mono',monospace;margin-bottom:6px;}
+.tactic p{font-size:12px;color:#8888b8;line-height:1.7;}
+
+/* QUESTIONS */
+.qs{background:var(--card);border:1px solid var(--bor);border-radius:11px;overflow:hidden;margin:12px 0;}
+.qs-head{background:rgba(248,113,113,.07);border-bottom:1px solid rgba(248,113,113,.18);padding:9px 16px;display:flex;align-items:center;gap:7px;}
+.qs-lbl{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--r);font-family:'JetBrains Mono',monospace;}
+.qs-badge{background:rgba(248,113,113,.2);color:var(--r);font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono',monospace;margin-left:auto;}
+.question{border-bottom:1px solid var(--bor);}
+.question:last-child{border-bottom:none;}
+.q-btn{width:100%;background:none;border:none;padding:12px 16px;text-align:left;cursor:pointer;display:flex;align-items:flex-start;gap:10px;}
+.q-btn:hover{background:rgba(255,255,255,.02);}
+.q-n{font-size:9px;font-weight:800;color:var(--r);font-family:'JetBrains Mono',monospace;min-width:20px;margin-top:2px;flex-shrink:0;}
+.q-text{font-size:12px;color:var(--t);line-height:1.6;flex:1;text-align:left;}
+.q-arr{color:var(--m);font-size:10px;margin-top:3px;transition:transform .2s;flex-shrink:0;}
+.q-ans{display:none;padding:0 16px 14px 46px;}
+.q-ans-box{background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.18);border-radius:7px;padding:11px 13px;}
+.q-ans-lbl{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--a3);font-family:'JetBrains Mono',monospace;margin-bottom:5px;}
+.q-ans-txt{font-size:12px;color:#80a898;line-height:1.7;}
+.q-why{margin-top:7px;font-size:11px;color:var(--m);line-height:1.6;font-style:italic;}
+
+
+
+/* QUANDO USAR */
+.wu-wrap{margin:10px 0;}
+.wu-cols{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+.wu-col{background:var(--card);border:1px solid var(--bor);border-radius:9px;padding:14px 16px;}
+.wu-col-title{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;font-family:'JetBrains Mono',monospace;margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+.wu-yes .wu-col-title{color:var(--a3);}
+.wu-no  .wu-col-title{color:var(--r);}
+.wu-list{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.wu-list li{font-size:12px;line-height:1.55;padding-left:16px;position:relative;color:var(--m2);}
+.wu-list li::before{position:absolute;left:0;font-size:11px;}
+.wu-yes .wu-list li::before{content:'✓';color:var(--a3);}
+.wu-no  .wu-list li::before{content:'✗';color:var(--r);}
+.wu-list li strong{color:var(--t);}
+.wu-single{background:var(--card);border:1px solid var(--bor);border-radius:9px;padding:14px 16px;margin-top:10px;}
+.wu-single .wu-list li::before{content:'→';color:var(--a);}
+@media(max-width:600px){.wu-cols{grid-template-columns:1fr;}}
+.wu-single .wu-list li::before{content:'→';color:var(--a);}
+.wu-single.wu-b .wu-list li::before{color:var(--a);}
+.wu-single.wu-p .wu-list li::before{color:var(--a2);}
+.wu-single.wu-g .wu-list li::before{color:var(--a3);}
+.wu-single.wu-y .wu-list li::before{color:var(--w);}
+
+
+/* USE CASES */
+.uc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin:10px 0;}
+.uc-card{background:var(--card);border:1px solid var(--bor);border-radius:9px;padding:14px 16px;position:relative;overflow:hidden;}
+.uc-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;border-radius:2px 0 0 2px;}
+.uc-b::before{background:var(--a);}
+.uc-p::before{background:var(--a2);}
+.uc-g::before{background:var(--a3);}
+.uc-y::before{background:var(--w);}
+.uc-company{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;font-family:'JetBrains Mono',monospace;margin-bottom:5px;}
+.uc-b .uc-company{color:var(--a);}
+.uc-p .uc-company{color:var(--a2);}
+.uc-g .uc-company{color:var(--a3);}
+.uc-y .uc-company{color:var(--w);}
+.uc-scenario{font-size:12px;font-weight:700;color:var(--t);margin-bottom:5px;line-height:1.4;}
+.uc-desc{font-size:11px;color:var(--m2);line-height:1.6;}
+.uc-badge{display:inline-flex;font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;margin-top:6px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.05em;}
+.uc-b .uc-badge{background:rgba(91,143,255,.13);color:var(--a);}
+.uc-p .uc-badge{background:rgba(167,139,250,.13);color:var(--a2);}
+.uc-g .uc-badge{background:rgba(52,211,153,.13);color:var(--a3);}
+.uc-y .uc-badge{background:rgba(251,191,36,.13);color:var(--w);}
+
+
+
+/* RESOURCE CARDS */
+.res-card{display:block;background:var(--card);border:1px solid var(--bor);border-radius:10px;
+  padding:16px;text-decoration:none;transition:border-color .2s,background .2s;cursor:pointer;}
+.res-card:hover{border-color:rgba(91,143,255,.4);background:rgba(91,143,255,.04);}
+.res-main{border-color:rgba(52,211,153,.3);background:rgba(52,211,153,.04);}
+.res-main:hover{border-color:rgba(52,211,153,.6);background:rgba(52,211,153,.07);}
+.res-icon{font-size:20px;margin-bottom:8px;}
+.res-name{font-size:13px;font-weight:700;color:var(--t);margin-bottom:4px;line-height:1.3;}
+.res-desc{font-size:11px;color:var(--m);line-height:1.5;margin-bottom:8px;}
+.res-tag{display:inline-flex;font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;
+  background:rgba(91,143,255,.12);color:var(--a);font-family:'JetBrains Mono',monospace;
+  text-transform:uppercase;letter-spacing:.06em;}
+.res-main .res-tag{background:rgba(52,211,153,.12);color:var(--a3);}
+
+/* FOOTER */
+.site-footer{margin-top:80px;padding:40px 0 60px;border-top:1px solid var(--bor);display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center;}
+.footer-avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--a),var(--a2));display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:#fff;flex-shrink:0;}
+.footer-name{font-size:18px;font-weight:800;color:var(--t);letter-spacing:-.3px;}
+.footer-role{font-size:12px;color:var(--m);font-family:'JetBrains Mono',monospace;margin-top:3px;}
+.footer-links{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:4px;}
+.footer-link{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:5px 12px;border-radius:6px;text-decoration:none;border:1px solid var(--bor2);color:var(--m2);transition:all .2s;font-family:'JetBrains Mono',monospace;letter-spacing:.04em;}
+.footer-link:hover{border-color:var(--a);color:var(--a);background:rgba(91,143,255,.07);}
+.footer-divider{width:40px;height:1px;background:var(--bor2);}
+.footer-copy{font-size:11px;color:var(--m);font-family:'JetBrains Mono',monospace;line-height:1.6;}
+
+/* MOBILE */
+
+/* ── HAMBURGER BUTTON (só aparece no mobile) ── */
+#sb-toggle{display:none;position:fixed;top:12px;right:14px;z-index:200;
+  background:var(--card);border:1px solid var(--bor2);border-radius:8px;
+  width:40px;height:40px;cursor:pointer;flex-direction:column;
+  align-items:center;justify-content:center;gap:5px;box-shadow:0 2px 12px rgba(0,0,0,.3);}
+#sb-toggle span{display:block;width:18px;height:1.5px;background:var(--t);
+  border-radius:2px;transition:all .25s;}
+#sb-toggle.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+#sb-toggle.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+#sb-toggle.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+
+/* ── OVERLAY ── */
+#sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);
+  z-index:150;backdrop-filter:blur(2px);}
+
+@media(max-width:760px){
+  /* Layout */
+  body{flex-direction:column;}
+
+  /* Sidebar vira drawer deslizante */
+  #sidebar{
+    position:fixed;top:0;left:0;height:100vh;width:280px;
+    transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+    z-index:160;border-right:1px solid var(--bor2);
+  }
+  #sidebar.open{transform:translateX(0);}
+  #sb-overlay.open{display:block;}
+  #sb-toggle{display:flex;}
+
+  /* Content ocupa tudo */
+  #content{width:100%;min-width:0;}
+  .c-inner{padding:64px 16px 60px;}
+
+  /* Tipografia fluida */
+  .hero h1{font-size:clamp(20px,6vw,30px);}
+  .topic h2{font-size:clamp(17px,5vw,22px);}
+  .topic-num{font-size:20px;min-width:32px;}
+  .topic-sum{font-size:12px;}
+
+  /* Hero stats empilham */
+  .hero-stats{gap:8px;}
+  .hstat{padding:8px 12px;}
+  .hstat-v{font-size:17px;}
+
+  /* How-to grid colapsa */
+  .how-grid{grid-template-columns:1fr 1fr;}
+
+  /* Seções */
+  .sec-title{margin-top:32px;}
+
+  /* Code scroll horizontal */
+  .code-wrap pre{font-size:10px;}
+  .code-wrap{overflow-x:auto;}
+
+  /* Tabelas scrolláveis */
+  .tw{overflow-x:auto;}
+  .tw table{min-width:480px;}
+
+  /* Wu columns empilham */
+  .wu-cols{grid-template-columns:1fr;}
+
+  /* Usecase grid colapsa */
+  .uc-grid{grid-template-columns:1fr;}
+
+  /* Questions padding menor */
+  .q-ans{padding:0 12px 12px 36px;}
+  .q-btn{padding:10px 12px;}
+
+  /* Topic top */
+  .topic-top{gap:10px;}
+
+  /* Blk title */
+  .blk-t{font-size:9px;}
+
+  /* cb padding menor */
+  .cb{padding:12px 14px;}
+  .cb p{font-size:11px;}
+
+  /* Analogy */
+  .analogy p{font-size:11px;}
+
+  /* Tactic */
+  .tactic p{font-size:11px;}
+
+  /* Footer */
+  .site-footer{padding:32px 0 48px;}
+}
+
+@media(max-width:420px){
+  .c-inner{padding:56px 12px 50px;}
+  .hero{padding:22px 16px;}
+  .how-grid{grid-template-columns:1fr;}
+  .hero-stats{gap:6px;}
+  .hstat{padding:7px 10px;min-width:70px;}
+  .hstat-v{font-size:15px;}
+  .hstat-l{font-size:8px;}
+}
+</style>
+</head>
+<body>
+
+<button id="sb-toggle" aria-label="Abrir menu" onclick="toggleSidebar()">
+  <span></span><span></span><span></span>
+</button>
+<div id="sb-overlay" onclick="closeSidebar()"></div>
+<nav id="sidebar">
+  <div class="sb-head">
+    <div class="sb-logo">AI-200</div>
+    <div class="sb-sub">Guia Completo · 27 tópicos</div>
+  </div>
+  <div class="sb-prog">
+    <div class="sb-prog-lbl">Progresso</div>
+    <div class="sb-bar"><div class="sb-fill" id="progFill"></div></div>
+    <div class="sb-prog-txt" id="progTxt">0 / 27 · 0%</div>
+  </div>
+  <div class="sb-search"><span class="sb-si">⌕</span><input type="text" id="sbSearch" placeholder="Buscar tópico..." oninput="filterSidebar(this.value)"></div>
+  <div class="sb-body" id="sbBody"></div>
+</nav>
+
+<div id="content"><div class="c-inner" id="main"></div></div>
+
+<script>
+// ═══════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════
+const TOPICS = [
+{id:"t1",num:"01",domain:"containers",week:1,title:"Azure Container Registry (ACR)",tag:"Containers · Semana 1",tagColor:"b",
+summary:"Repositório privado de imagens Docker integrado nativamente com todos os serviços Azure via Managed Identity — sem senhas.",
+sections:[
+{title:"O que é e por que usar",content:`O ACR é o Docker Hub privado da Microsoft dentro da sua assinatura Azure. Mantém tudo dentro da sua conta, na mesma região dos seus serviços, com controle de acesso por RBAC e integração com Managed Identity.
+
+SKUs: Basic (dev/teste), Standard (produção, webhooks), Premium (geo-replication, private link — use quando Container Apps em múltiplas regiões precisam puxar imagens localmente).`},
+{title:"ACR Tasks — o tópico favorito do exame",content:`ACR Tasks automatiza builds no Azure, sem servidor de CI. 3 tipos de trigger:
+
+Quick task (az acr build): build on-demand sem Docker local.
+Git commit trigger: a cada push no GitHub/ADO, o ACR reconstrói a imagem.
+Base image update trigger: quando a imagem base (ex: node:20-alpine) recebe update, sua imagem é reconstruída automaticamente. Este é o cenário mais cobrado.`,
+code:`# Criar ACR
+az acr create --name meuacr --resource-group rg-ai200 --sku Standard
+
+# Build sem Docker local (quick task)
+az acr build --registry meuacr --image minhaapi:v1 .
+
+# Task com base image trigger
+az acr task create \\
+  --name rebuild-on-base --registry meuacr \\
+  --image minhaapi:{{.Run.ID}} \\
+  --context https://github.com/meu/repo.git \\
+  --file Dockerfile \\
+  --base-image-trigger-enabled true
+
+# Dar permissão para Container App puxar imagens (sem senha)
+az role assignment create \\
+  --role AcrPull \\
+  --scope $(az acr show --name meuacr --query id -o tsv) \\
+  --assignee $CONTAINER_APP_PRINCIPAL_ID`,lang:"bash"}
+],
+analogy:"ACR está para Docker Hub assim como um repositório privado do GitHub está para o GitHub público. Você controla quem acessa, revoga acesso, audita pulls — tudo dentro da sua conta.",
+tactic:"Crie um ACR gratuito e faça az acr build de uma API Node.js simples. Em 10 minutos você entende o fluxo. Depois configure uma task com base image trigger e observe o rebuild automático.",tacticColor:"b",
+whenuse:{"yes": ["Você precisa de um registry Docker privado dentro da sua assinatura Azure", "Imagens precisam ser reconstruídas automaticamente quando a imagem base recebe patch de segurança", "Container Apps, AKS ou App Service precisam puxar imagens sem credenciais hardcoded", "Você tem apps em múltiplas regiões e quer pull rápido com geo-replication"], "no": ["Sua imagem já está no Docker Hub público e não há requisito de privacidade", "Você está apenas fazendo testes locais sem deploy no Azure"]},
+  usecases:[{company:"Netflix",scenario:"Rebuild automático de imagens de microsserviços",desc:"Quando o time de segurança atualiza a imagem base Ubuntu, uma ACR Task reconstrói automaticamente todas as +200 imagens de serviços sem intervenção manual. Zero imagens com CVEs não corrigidos em produção.",badge:"base image trigger"},
+  {company:"Banco Itaú (exemplo)",scenario:"Pipeline de CI sem servidor de build dedicado",desc:"Ao invés de manter servidores Jenkins, o push no GitHub dispara uma ACR Task que builda e publica a imagem. Reduz custo de infra de CI e elimina gargalo de build em horário de pico.",badge:"git commit trigger"},
+  {company:"Startup SaaS",scenario:"Registry privado multi-região com pull rápido",desc:"Container Apps no Brasil e na Europa puxam imagens do ACR com geo-replication. O pull vem da réplica mais próxima — latência de 200ms vs 2s sem geo-replication.",badge:"sku premium"}],
+questions:[
+{q:"Sua equipe precisa que as imagens sejam reconstruídas automaticamente quando a imagem base do Node.js recebe um patch de segurança. Qual recurso do ACR usar?",a:"ACR Task com base image update trigger.",why:"Webhook notifica sistemas quando UMA imagem é publicada (saída). Base image trigger reage à atualização da imagem pai (entrada). Direções opostas."},
+{q:"Um dev quer fazer build de uma imagem sem ter Docker instalado localmente. Qual comando?",a:"az acr build --registry meuacr --image app:v1 . — envia o contexto para o Azure e o ACR faz o build na nuvem.",why:null},
+{q:"Container Apps em 3 regiões precisam puxar imagens com latência mínima. Qual SKU e feature do ACR?",a:"SKU Premium com geo-replication. Crie réplicas nas mesmas regiões dos Container Apps. O Docker pull resolve para a réplica mais próxima automaticamente.",why:null}
+]},
+
+{id:"t2",num:"02",domain:"containers",week:1,title:"App Service + Deploy de Containers",tag:"Containers · Semana 1",tagColor:"b",
+summary:"PaaS para hospedar APIs. Foco em deploy de containers, configuração segura e deploys zero-downtime com deployment slots.",
+sections:[
+{title:"Deployment Slots — cai muito",content:`Slots são instâncias separadas com URL própria (ex: myapp-staging.azurewebsites.net).
+
+Swap: troca instantânea entre slots sem downtime. O App Service aquece o slot staging (health checks, inicialização de cache) antes do swap.
+
+Slot settings: variáveis marcadas como "slot setting" ficam presas ao slot — não viajam no swap. Use para connection strings de bancos diferentes.
+
+Traffic splitting: enviar X% do tráfego para outro slot (A/B testing).
+
+Rollback: se algo der errado, outro swap restaura a versão anterior em segundos.`},
+{title:"App Settings com referência ao Key Vault",content:`Em vez de colar connection strings nas variáveis, você referencia o secret pelo URI do Key Vault. O App Service resolve em runtime via Managed Identity — o valor real nunca aparece em logs.
+
+Sintaxe: @Microsoft.KeyVault(SecretUri=https://vault.vault.azure.net/secrets/nome/)`,
+code:`# Criar slot staging
+az webapp deployment slot create --name minha-api \\
+  --resource-group rg-ai200 --slot staging
+
+# App Setting com referência ao Key Vault
+az webapp config appsettings set --name minha-api \\
+  --resource-group rg-ai200 \\
+  --settings "DB_URL=@Microsoft.KeyVault(SecretUri=https://vault.vault.azure.net/secrets/db-url/)"
+
+# Marcar como slot setting (não viaja no swap!)
+az webapp config appsettings set --name minha-api \\
+  --resource-group rg-ai200 \\
+  --slot-settings "DB_URL=@Microsoft.KeyVault(SecretUri=...)"
+
+# Swap staging → produção (zero downtime)
+az webapp deployment slot swap --name minha-api \\
+  --resource-group rg-ai200 --slot staging`,lang:"bash"}
+],
+analogy:"Slots são como um restaurante com duas cozinhas. A cozinha A serve os clientes. A cozinha B prepara o novo cardápio. Quando tudo está pronto, você faz o swap: a B passa a servir. Se o cardápio for ruim, reverta para a A — que ainda está intacta.",
+tactic:"Crie dois slots e experimente o swap. Deixe uma App Setting sem 'slot setting' de propósito e observe ela viajar no swap — isso fixa o conceito mais que qualquer leitura.",tacticColor:"b",
+whenuse:{"yes": ["Você precisa de deploy zero-downtime com rollback em segundos (deployment slots)", "A connection string de produção não pode aparecer em nenhum log ou portal", "Você quer testar uma nova versão com % do tráfego antes do rollout completo", "Sua stack é uma API REST ou app web que não precisa de orquestração complexa"], "no": ["Você precisa de controle de infraestrutura (use AKS)", "Sua carga é muito variável e intermitente (considere Container Apps com scale-to-zero)", "Você precisa rodar containers side-by-side no mesmo pod"]},
+  usecases:[{company:"E-commerce de moda",scenario:"Deploy de Black Friday sem janela de manutenção",desc:"A nova versão da API de checkout vai para o slot staging às 3h. Às 8h59 (1 min antes da Black Friday começar), o swap leva menos de 10 segundos. Se algo der errado, outro swap reverte em 8 segundos.",badge:"deployment slot"},
+  {company:"FinTech de pagamentos",scenario:"Connection string do banco sem exposição",desc:"A string de conexão ao banco de dados (com credenciais de produção) fica no Key Vault. O App Service referencia o secret por URI. Nenhum desenvolvedor vê a senha de produção — nem no portal, nem nos logs.",badge:"key vault reference"},
+  {company:"Plataforma de educação",scenario:"A/B test de nova UI de matrícula",desc:"10% do tráfego vai para o slot com a nova UI de checkout de cursos. Após 48h, a taxa de conversão subiu 12%. O swap promove a versão para 100% dos usuários em segundos.",badge:"traffic splitting"}],
+questions:[
+{q:"Você precisa fazer deploy de uma nova versão sem interromper usuários, com possibilidade de rollback imediato. Como?",a:"Deployment slots. Deploy no slot 'staging' → aquecimento → swap para produção. Se algo der errado, swap reverso restaura a versão anterior em segundos.",why:null},
+{q:"Após um swap, o App de produção usou a connection string do banco de staging. O que aconteceu?",a:"A App Setting não estava marcada como 'slot setting'. Marque-a com --slot-settings. Assim cada slot mantém sua própria connection string.",why:null},
+{q:"Como armazenar a connection string no App Service sem que fique visível no portal?",a:"App Setting com referência ao Key Vault (@Microsoft.KeyVault(SecretUri=...)). O App Service com Managed Identity resolve o valor em runtime sem expor o secret.",why:null}
+]},
+
+{id:"t3",num:"03",domain:"containers",week:2,title:"Azure Container Apps",tag:"Containers · Semana 2",tagColor:"b",
+summary:"Plataforma serverless para containers. Kubernetes gerenciado — você define o container e as regras, a Microsoft gerencia o resto. O mais cobrado no domínio containers.",
+sections:[
+{title:"Hierarquia de conceitos",content:`Environment: agrupamento de Container Apps que compartilham rede interna e Log Analytics. Apps no mesmo environment se comunicam internamente sem sair para a internet.
+
+Revision: snapshot imutável do app. Toda mudança de imagem ou configuração cria uma nova revision.
+
+Replica: instância em execução de uma revision. A escala aumenta réplicas.
+
+Revision modes:
+- Single: uma revision ativa por vez. Simples.
+- Multiple: várias revisions simultâneas com traffic splitting. Para blue/green e canary.
+
+Ingress:
+- External: app acessível pela internet.
+- Internal: só acessível de outros apps no mesmo environment. Use para microservices privados.`,
+code:`# Criar environment
+az containerapp env create --name meu-env \\
+  --resource-group rg-ai200 --location eastus
+
+# Deploy com scale-to-zero
+az containerapp create \\
+  --name minha-api --resource-group rg-ai200 \\
+  --environment meu-env \\
+  --image meuacr.azurecr.io/minhaapi:v1 \\
+  --target-port 3000 --ingress external \\
+  --min-replicas 0 --max-replicas 10
+
+# Multiple revisions para A/B testing
+az containerapp revision set-mode \\
+  --name minha-api --resource-group rg-ai200 --mode multiple
+
+# Split de tráfego: 90% v1, 10% v2
+az containerapp ingress traffic set --name minha-api \\
+  --resource-group rg-ai200 \\
+  --revision-weight revision-v1=90 revision-v2=10`,lang:"bash"}
+],
+analogy:"Container Apps está para o AKS assim como o Vercel está para um servidor EC2. Com Vercel você não gerencia nada — só define o app. Com Container Apps, você define o container e as regras. A plataforma cuida de nodes, upgrades, load balancing e networking.",
+tactic:"Deploy a mesma API nos dois revision modes. Experimente traffic split 80/20. Quando você entende que revision ≠ replica, o modelo mental fica claro para todas as questões de escala.",tacticColor:"b",
+whenuse:{"yes": ["APIs, workers de background e microservices sem precisar gerenciar Kubernetes", "Você quer scale-to-zero: custo zero quando não há tráfego", "Escala baseada em eventos de fila (KEDA built-in)", "Precisa de blue/green ou canary deploy simples com revision mode multiple"], "no": ["Sua app precisa de StatefulSets com armazenamento persistente (use AKS)", "Você precisa de configuração avançada de Kubernetes (CNI, DaemonSets, node pools customizados)", "Você precisa de múltiplos containers com dependências de ciclo de vida no mesmo pod"]},
+  usecases:[{company:"iFood (exemplo)",scenario:"API de rastreamento de pedidos",desc:"Container App com ingress external exposta para o app mobile. minReplicas=2 garante sempre 2 instâncias. A API de restaurantes é ingress internal — só acessível internamente, nunca exposta para a internet.",badge:"ingress internal/external"},
+  {company:"Empresa de logística",scenario:"Blue/green deploy de sistema de roteirização",desc:"Nova versão do algoritmo de roteirização vai para revision-v2 com 5% do tráfego. Após validação por 2h sem erros, o traffic split muda para 100% na v2. Zero downtime, rollback em 1 clique.",badge:"multiple revisions"},
+  {company:"Plataforma de analytics",scenario:"Workers de processamento de eventos",desc:"Container App com minReplicas=0 processa eventos de cliques. Às 2h da manhã não há tráfego — zero instâncias, custo zero. Às 9h com pico de usuários, escala automaticamente para 8 instâncias.",badge:"scale-to-zero"}],
+questions:[
+{q:"Qual é a diferença entre uma revision e uma replica no Azure Container Apps?",a:"Revision = versão imutável do app (nova imagem ou config cria nova revision). Replica = instância em execução de uma revision. Uma revision pode ter 0 a N réplicas.",why:null},
+{q:"Você quer testar uma nova versão com 5% dos usuários antes do rollout completo. O que configurar?",a:"Revision mode: multiple + traffic splitting. Ativar multiple mode, fazer deploy da nova revision, configurar 95% para a revision antiga e 5% para a nova.",why:null},
+{q:"Dois microservices precisam se comunicar sem exposição para a internet. Como?",a:"Ingress internal em ambos. Apps no mesmo environment se comunicam pelo nome do app (http://nome-do-app) via DNS interno.",why:null}
+]},
+
+{id:"t4",num:"04",domain:"containers",week:2,title:"KEDA — Kubernetes Event-driven Autoscaling",tag:"Containers · Semana 2",tagColor:"b",
+summary:"Autoscaling baseado em eventos, não em CPU. Escala pelo número de mensagens na fila, lag de streaming, ou qualquer métrica externa. Built-in no Container Apps.",
+sections:[
+{title:"Por que KEDA existe e como funciona",content:`O problema do autoscaling por CPU: um worker de embeddings processa uma fila do Service Bus. A fila tem 5.000 mensagens. O worker aguarda I/O (chamada ao OpenAI, write no banco) — CPU em 8%. O autoscaler tradicional não escalaria. A fila continua crescendo.
+
+Com KEDA: "crie 1 réplica para cada 10 mensagens na fila". 5.000 mensagens → 500 réplicas (até o máximo). Fila vazia → 0 réplicas (scale-to-zero, custo zero).
+
+Scalers disponíveis (60+):
+- azure-servicebus: pelo número de mensagens. O mais comum em pipelines de AI.
+- azure-eventhubs: pelo lag de consumo.
+- redis: pelo comprimento de uma lista.
+- postgresql: por resultado de uma query SQL.
+- cron: por horário (9h–18h = 5 réplicas, resto = 0).
+- http: por requests HTTP concorrentes.`,
+code:`# KEDA scale rule por Service Bus
+az containerapp update \\
+  --name meu-worker --resource-group rg-ai200 \\
+  --min-replicas 0 --max-replicas 20 \\
+  --scale-rule-name sb-rule \\
+  --scale-rule-type azure-servicebus \\
+  --scale-rule-metadata queueName=ai-jobs messageCount=5 \\
+  --scale-rule-auth connection=servicebus-secret
+
+# Lógica: ceil(mensagens / messageCount) = réplicas
+# 47 msgs / 5 = ceil(9.4) = 10 réplicas
+# Fila vazia = 0 réplicas (scale-to-zero = custo zero)`,lang:"bash"}
+],
+analogy:"KEDA é o sistema de chamada de um supermercado. Não importa o quanto os caixas estão 'ocupados' (CPU) — o que importa é o tamanho da fila de clientes. Mais de 10 clientes por caixa → abre mais um caixa. Loja fechada e fila vazia → todos os caixas fecham.",
+tactic:"Suba um Container App com minReplicas=0 e um KEDA scaler de Service Bus. Envie 50 mensagens via CLI e observe as réplicas sendo criadas no portal. Ver a escala acontecer ao vivo é inesquecível.",tacticColor:"b",
+whenuse:{"yes": ["O workload escala por eventos, não por CPU (fila, mensagens, lag de streaming)", "O volume é imprevisível e você quer custo zero quando ocioso (minReplicas=0)", "Workers de AI que processam jobs do Service Bus, Event Hubs ou Redis", "Você quer escalar automaticamente de 0 a centenas de instâncias sem configuração manual"], "no": ["A carga é previsível e constante — KEDA adiciona complexidade desnecessária", "Você precisa de escala por CPU/memória — o HPA nativo do Kubernetes é suficiente", "O processamento é síncrono e orientado a requests HTTP (use apenas HTTP scaler ou HPA)"]},
+  usecases:[{company:"Empresa de AI generativa",scenario:"Geração de embeddings em batch",desc:"Quando um cliente faz upload de 10.000 documentos para indexação, a fila do Service Bus enche. O KEDA scaler azure-servicebus cria 50 workers de embedding em paralelo. Após processar tudo, volta a zero. Custo: pago pelo tempo de processamento real, não por capacidade ociosa 24/7.",badge:"azure-servicebus scaler"},
+  {company:"Plataforma de e-learning",scenario:"Processamento de vídeos no horário comercial",desc:"Workers de transcrição de vídeo precisam estar disponíveis apenas das 9h às 18h. O KEDA cron scaler mantém 3 instâncias durante o dia e as desliga à noite. Economia de 58% comparado a instâncias 24/7.",badge:"cron scaler"},
+  {company:"Sistema de pedidos online",scenario:"Escala por comprimento de fila Redis",desc:"Fila Redis acumula pedidos de personalização de produto. O KEDA redis scaler cria 1 worker por 5 pedidos na fila. Pico de 200 pedidos simultâneos → 40 workers criados automaticamente em ~20 segundos.",badge:"redis scaler"}],
+questions:[
+{q:"Você processa jobs de embedding de uma fila do Service Bus. O volume varia de 0 a 10.000 jobs/dia de forma imprevisível. Como implementar de forma custo-eficiente?",a:"Azure Container Apps com KEDA scaler do tipo azure-servicebus e minReplicas=0. Com scale-to-zero você paga zero quando a fila está vazia. maxReplicas define o teto de custo.",why:"CPU estaria baixo mesmo com fila cheia (worker aguarda I/O). KEDA escala pelo que realmente importa."},
+{q:"Com minReplicas=0 e messageCount=5, quantas réplicas são criadas quando a fila tem 47 mensagens?",a:"ceil(47/5) = 10 réplicas. KEDA calcula: desiredReplicas = ceil(mensagens / targetPorReplica).",why:null},
+{q:"Você quer que um worker seja ativado apenas durante o horário comercial (9h–18h, seg–sex). Qual KEDA scaler?",a:"KEDA cron scaler. Defina schedule CRON para escalar para N réplicas às 9h e voltar a 0 às 18h nos dias úteis.",why:null}
+]},
+
+{id:"t5",num:"05",domain:"containers",week:2,title:"AKS — Azure Kubernetes Service",tag:"Containers · Semana 2",tagColor:"b",
+summary:"Kubernetes gerenciado com controle total. Na AI-200 o foco é deploy via manifests e troubleshooting básico.",
+sections:[
+{title:"Conceitos e troubleshooting",content:`Pod: menor unidade deployável. Um ou mais containers que compartilham rede e storage. Pods são efêmeros.
+
+Deployment: declara o estado desejado (3 réplicas desta imagem). O Kubernetes reconcilia continuamente.
+
+Service: expõe pods como endpoint estável. ClusterIP (interno), LoadBalancer (IP público), NodePort.
+
+Troubleshooting — comandos cobrados no exame:
+- kubectl get pods → lista pods e status (Running, Pending, CrashLoopBackOff)
+- kubectl logs pod-name --previous → logs do container que crashou antes de reiniciar
+- kubectl describe pod pod-name → eventos do pod, motivo de falha
+- kubectl get events --sort-by=.lastTimestamp → todos os eventos em ordem`}
+],
+table:{headers:["Critério","Container Apps","AKS"],rows:[
+["Gerenciamento","Serverless — Microsoft gerencia","Você gerencia nodes e config"],
+["Scale-to-zero","✓ Nativo","Requer config extra"],
+["KEDA","✓ Built-in","Instalar separado"],
+["StatefulSets","Não","Sim"],
+["Quando usar","APIs, workers, microservices","Workloads complexas, controle total"]
+]},
+analogy:null,
+tactic:"Crie um cluster AKS gratuito, escreva um deployment.yaml e faça deploy. Intencionalmente coloque uma imagem errada e use kubectl describe para ver o erro ImagePullBackOff. Troubleshooting ao vivo é memorável.",tacticColor:"b",
+whenuse:{"yes": ["Você precisa de StatefulSets (bancos de dados em containers, Kafka, ZooKeeper)", "Workloads que exigem controle total: CNI plugins, node pools com GPU, DaemonSets", "Quando Container Apps não suporta o que você precisa (sidecar patterns complexos, init containers avançados)", "Times com expertise em Kubernetes que já operam clusters"], "no": ["Apps simples de API, workers e microservices (use Container Apps — mais simples)", "Você não quer gerenciar upgrades de node pool e patches de segurança", "Seu time não tem expertise em Kubernetes — a curva de aprendizado é alta"]},
+  usecases:[{company:"Banco Central (exemplo)",scenario:"Workloads com StatefulSets",desc:"Sistema de processamento de transações usa PostgreSQL em pods StatefulSets no AKS — com armazenamento persistente e identidade de pod estável. Container Apps não suporta StatefulSets. AKS é a única opção aqui.",badge:"statefulsets"},
+  {company:"Empresa de ML",scenario:"Jobs de treinamento com GPUs customizadas",desc:"Treinamento de modelos exige node pools com GPUs A100, configuração específica de CPU/memória e tolerations Kubernetes customizados. AKS permite esse nível de controle que Container Apps não oferece.",badge:"controle total"},
+  {company:"Startup de microservices",scenario:"Troubleshooting de pod em CrashLoopBackOff",desc:"API Node.js entra em CrashLoopBackOff em produção às 3h. O dev usa kubectl logs --previous para ver a mensagem de erro da execução anterior e kubectl describe pod para ver o evento 'OOMKilled' — pod estava extrapolando o limite de memória.",badge:"kubectl troubleshoot"}],
+questions:[
+{q:"Um pod está em CrashLoopBackOff. O container reinicia imediatamente. Como ver o motivo?",a:"kubectl logs nome-do-pod --previous para ver os logs da execução anterior. Combine com kubectl describe pod para ver o exit code e eventos.",why:null},
+{q:"Quando escolher AKS em vez de Container Apps?",a:"Quando você precisa de: controle total sobre o cluster, StatefulSets, DaemonSets, networking customizado (CNI plugins), ou workloads que o Container Apps não suporta.",why:null}
+]},
+
+// ─── AI DATA ───
+{id:"t6",num:"06",domain:"data",week:3,title:"Azure Cosmos DB for NoSQL",tag:"AI Data · Semana 3",tagColor:"p",
+summary:"Banco NoSQL distribuído globalmente. O maior domínio individual da AI-200 (25–30%). Agora com vector search nativo.",
+sections:[
+{title:"Modelo de dados e Partition Key",content:`Hierarquia: Account → Database → Container → Item.
+
+Item: documento JSON com campos id (string, obrigatório) e o valor da partition key.
+
+Partition Key: distribui dados entre partições físicas. Imutável após a criação. Boa partition key: alta cardinalidade, distribuição uniforme, aparece em 90% dos filtros WHERE. Exemplos: userId, tenantId.
+
+Má partition key: baixa cardinalidade (ex: status = "ativo/inativo") → hotspot.
+
+Cross-partition query: sem filtrar pela partition key, faz fan-out para todas as partições → muito mais RUs.`},
+{title:"Indexing Policy",content:`Por padrão, todos os campos são indexados. Ótimo para flexibilidade, caro para writes pesados.
+
+includedPaths: indexar apenas campos filtrados em queries.
+excludedPaths: excluir campos grandes nunca filtrados (ex: /rawContent/*).
+vectorIndexes: para campos de embedding. Tipo: diskANN.`,
+code:`import { CosmosClient } from "@azure/cosmos";
+import { DefaultAzureCredential } from "@azure/identity";
+
+const client = new CosmosClient({
+  endpoint: process.env.COSMOS_ENDPOINT!,
+  aadCredentials: new DefaultAzureCredential() // sem senha!
+});
+
+const { container } = await client.database("ai-db")
+  .containers.createIfNotExists({
+    id: "docs",
+    partitionKey: { paths: ["/category"] },
+    indexingPolicy: {
+      includedPaths: [{ path: "/category/?" }, { path: "/title/?" }],
+      excludedPaths: [{ path: "/rawContent/*" }], // texto grande, não filtrado
+      vectorIndexes: [{ path: "/embedding", type: "diskANN" }]
+    },
+    vectorEmbeddingPolicy: {
+      vectorEmbeddings: [{
+        path: "/embedding", dataType: "float32",
+        distanceFunction: "cosine", dimensions: 1536
+      }]
+    }
+  });`,lang:"typescript"}
+],
+analogy:"Você já usa MongoDB — os conceitos são análogos. A principal diferença: no Cosmos DB você declara a partition key na criação e ela é imutável. Além disso, o Cosmos DB cobra em RUs (abstração de CPU+IO+memória), não em operações diretas.",
+tactic:"Crie dois containers: um com política padrão e outro com includedPaths/excludedPaths otimizados. Insira 100 documentos e compare o consumo de RUs. Números reais fixam o conceito.",tacticColor:"p",
+whenuse:{"yes": ["Você precisa de escala global com latência < 10ms em qualquer região", "Dados são documentos JSON com schema flexível ou variável", "Você precisa de vector search junto com dados JSON no mesmo container", "Alta taxa de writes com partition key bem definida (ex: userId, tenantId)"], "no": ["Você precisa de JOINs complexos entre entidades (use PostgreSQL)", "Seu schema é fortemente relacional com integridade referencial (use PostgreSQL ou SQL)", "Você já tem dados no PostgreSQL e quer apenas adicionar vector search (use pgvector)", "Seu dataset é pequeno e não precisa de escala global"]},
+  usecases:[{company:"Plataforma de streaming",scenario:"Catálogo de filmes e séries com buscas flexíveis",desc:"Container 'catalog' com partition key=/genre. Queries por gênero são sempre within-partition. O campo 'description' (texto longo) está em excludedPaths — reduz 40% do custo de write. O campo 'title' está em includedPaths para busca rápida.",badge:"indexing policy"},
+  {company:"App de delivery",scenario:"Histórico de pedidos por usuário",desc:"Container 'orders' com partition key=/userId. Toda query 'buscar pedidos do usuário X' filtra por userId — sempre within-partition. Sem cross-partition queries. O sistema suporta 10M de usuários com latência < 10ms.",badge:"partition key"},
+  {company:"Sistema de assistente AI",scenario:"Documentos com embeddings para RAG",desc:"Container 'documents' com vectorEmbeddingPolicy (diskANN, cosine, 1536 dims). O campo /rawContent está em excludedPaths. Busca semântica via VectorDistance() retorna os chunks mais relevantes para o prompt do usuário.",badge:"vector search"}],
+questions:[
+{q:"Queries consomem 500 RUs mas deveriam ser ~10. O campo 'category' está nos filtros WHERE mas não está indexado. Como corrigir?",a:"Adicionar /category/? ao includedPaths da indexing policy. Sem índice, o Cosmos DB faz full scan da partição para cada query com esse filtro.",why:null},
+{q:"Um campo 'rawContent' contém textos de 50KB e nunca é filtrado. O que fazer para reduzir writes?",a:"Adicionar /rawContent/* ao excludedPaths. Isso impede a indexação do campo, reduzindo significativamente o custo de RUs em insert e update.",why:null},
+{q:"Você precisa armazenar embeddings de 1536 dimensões e executar busca de similaridade. O que adicionar ao indexing policy?",a:"vectorIndexes com type diskANN para o path do campo de embedding, e vectorEmbeddingPolicy declarando dataType: float32, distanceFunction: cosine, dimensions: 1536.",why:null}
+]},
+
+{id:"t7",num:"07",domain:"data",week:3,title:"Consistency Levels no Cosmos DB",tag:"AI Data · Semana 3",tagColor:"p",
+summary:"Um dos tópicos mais cobrados. Define o trade-off entre consistência dos dados, latência e custo em bancos distribuídos.",
+sections:[
+{title:"Os 5 níveis",content:`Em um banco replicado em 3 regiões, quando você escreve em São Paulo, quanto tempo leva para Tóquio ver esse write? Depende do nível de consistência escolhido.`}
+],
+table:{headers:["Level","Garantia","Custo RUs","Quando usar"],rows:[
+["Strong","Toda leitura retorna o write mais recente de qualquer região","2×","Transações financeiras, inventário crítico"],
+["Bounded Staleness","Atraso máximo de K operações ou T segundos","Alto","SLA de frescor definido"],
+["Session ★ (padrão)","Dentro da mesma sessão: read-your-writes garantido","Baixo","90% dos apps: e-commerce, perfis, chats"],
+["Consistent Prefix","Writes vistos em ordem, sem inversões","Muito baixo","Feeds de atividade, timelines"],
+["Eventual","Sem garantia de ordem ou atualidade","Mínimo","Contadores, curtidas, analytics"]
+]},
+analogy:null,
+tactic:"Memorize: 'O usuário precisa ver o que ele próprio acabou de escrever' → Session. Isso cobre 90% das questões. Strong apenas quando 'qualquer usuário em qualquer região precisa ver o write instantaneamente'.",tacticColor:"p",
+whenuse:{"tip": true, "items": ["<strong>Strong</strong>: dados financeiros, saldo de conta, inventário crítico — qualquer usuário em qualquer região precisa ver o write mais recente imediatamente. Custo: 2× em RUs.", "<strong>Session (padrão)</strong>: e-commerce, redes sociais, perfis, chats — o usuário precisa ver suas próprias escritas, mas outros podem ter atraso aceitável. Cobre 90% dos casos.", "<strong>Bounded Staleness</strong>: quando você tem um SLA definido de frescor dos dados (ex: máximo 30 segundos de atraso entre regiões). Raro na prática.", "<strong>Consistent Prefix</strong>: feeds de atividade, timelines, logs de eventos — a ordem importa, mas atraso é aceitável.", "<strong>Eventual</strong>: contadores de views, curtidas, scores aproximados — pequenas imprecisões são aceitáveis e custo mínimo é prioritário."]},
+  usecases:[{company:"Banco digital",scenario:"Saldo de conta bancária",desc:"Consistency level: Strong. Quando um saque é feito, qualquer ATM ou app, em qualquer região do mundo, deve ver o saldo atualizado imediatamente. Sem Strong, um usuário poderia sacar dinheiro duas vezes em ATMs de regiões diferentes antes da sincronização.",badge:"strong"},
+  {company:"Rede social",scenario:"Feed de posts e notificações",desc:"Consistency level: Session. O usuário publica um post e imediatamente vê ele no feed (read-your-writes). Outros usuários podem ver com 1-2 segundos de atraso — totalmente aceitável. Custo 2x menor que Strong.",badge:"session"},
+  {company:"Sistema de recomendação",scenario:"Contador de views de vídeos",desc:"Consistency level: Eventual. O contador de 'visualizações' pode ter alguns segundos de atraso e pequenas imprecisões entre regiões. Usuários não percebem a diferença entre '1.234.567' e '1.234.589' views. Custo mínimo, latência mínima.",badge:"eventual"}],
+questions:[
+{q:"Um usuário atualiza seu perfil e clica em 'ver perfil'. Precisa ver as mudanças. Qual consistency level?",a:"Session. Garante read-your-writes dentro da mesma sessão. O usuário sempre vê suas próprias escritas.",why:null},
+{q:"Sistema bancário: qualquer agência, em qualquer país, precisa ver o saldo atualizado imediatamente após saque. Qual level?",a:"Strong. Garante que toda leitura, em qualquer região, retorna o write mais recente. Custo: 2× em RUs.",why:null},
+{q:"Contador de 'curtidas'. Pequenas imprecisões são aceitáveis e o custo precisa ser mínimo. Qual level?",a:"Eventual. Para contadores aproximados, eventual oferece mínima latência e mínimo custo em RUs.",why:null},
+{q:"Feed de atividades onde eventos nunca devem aparecer fora de ordem, mas podem chegar com atraso. Qual level?",a:"Consistent Prefix. Garante que writes são vistos na ordem em que foram feitos (sem inversões), mas não garante imediato.",why:null}
+]},
+
+{id:"t8",num:"08",domain:"data",week:3,title:"Request Units (RUs)",tag:"AI Data · Semana 3",tagColor:"p",
+summary:"A moeda de processamento do Cosmos DB. Normaliza CPU + I/O + memória em uma única unidade de custo.",
+sections:[
+{title:"O que determina o custo e modos de throughput",content:`1 RU: ler item pelo id + partition key (operação mais barata).
+Query com índice: ~2–10 RUs.
+Query sem índice (full scan): pode ser 100–1000× mais caro!
+Cross-partition query: multiplica pelo número de partições físicas.
+Insert/Update: 5–20 RUs dependendo do tamanho e quantidade de índices.
+
+Modos de throughput:
+Provisioned: você define RU/s fixos. Paga sempre esse valor. Para cargas previsíveis.
+Serverless: paga por RU consumida. Sem provisionamento. Para dev/teste e cargas intermitentes. Limite: 5000 RU/s por container.
+Autoscale: define o máximo (ex: 4000 RU/s). Escala de 10% a 100% automaticamente. Paga pelo peak da hora. Melhor dos dois mundos para produção.
+
+Erro 429 (TooManyRequests): throughput excedido. O SDK do Cosmos DB faz retry com backoff exponencial automaticamente.`}
+],
+analogy:"RUs são como fichas de arcade. Point read = 1 ficha. Full scan sem índice = 500 fichas. Escolher bem os índices é saber jogar sem desperdiçar fichas.",
+tactic:"No portal Azure, execute queries com e sem filtro pela partition key no Data Explorer. O portal mostra o custo em RUs de cada query no cabeçalho da resposta. Ver 5 RUs vs 400 RUs fixa o conceito.",tacticColor:"p",
+whenuse:{"tip": true, "items": ["<strong>Provisioned (fixo)</strong>: cargas previsíveis e constantes. Ex: sistema interno com 200 usuários das 8h às 18h. Você sabe exatamente quantos RUs vai precisar.", "<strong>Serverless</strong>: desenvolvimento, testes, e apps com tráfego muito baixo e intermitente (< 1000 requests/dia). Limite de 5000 RU/s por container.", "<strong>Autoscale</strong>: a maioria dos apps de produção. Picos imprevisíveis (Black Friday, campanhas). Você define o teto de custo (maxRU/s) e paga pelo que usar.", "<strong>Otimizar indexing policy</strong>: sempre que writes são caros — adicione excludedPaths para campos grandes não filtrados e includedPaths para só indexar o necessário."]},
+  usecases:[{company:"Marketplace de produtos",scenario:"Queries lentas com 429 em horário de pico",desc:"Em promoções, o Cosmos DB retorna erros 429. Diagnóstico: queries sem filtro por partition key fazem fan-out (cross-partition) consumindo 800 RUs cada. Solução: adicionar partition key ao WHERE e campos filtrados ao includedPaths. Resultado: 800 RUs → 8 RUs por query.",badge:"otimização de rus"},
+  {company:"Plataforma de analytics",scenario:"Workload com picos imprevisíveis",desc:"Relatórios são gerados sob demanda — às vezes 0 por hora, às vezes 1000 simultâneos. Autoscale com máximo de 10.000 RU/s resolve: nas horas ociosas escala para 1.000 RU/s (10% do máximo). Custo mensal 60% menor que Provisioned fixo.",badge:"autoscale"},
+  {company:"Sistema de IoT",scenario:"Alta frequência de writes de sensores",desc:"10.000 sensores escrevem leituras a cada 5 segundos. Campo 'rawData' (string longa) foi excluído do indexing policy. Resultado: custo de write caiu de 15 RUs para 5 RUs por operação — economia de 66% só em indexação.",badge:"excludedpaths"}],
+questions:[
+{q:"Aplicação com picos de uso às 9h e 18h, quase idle à noite. Qual modo de throughput é mais custo-eficiente?",a:"Autoscale. Define-se o máximo necessário no pico. Fora do pico, escala para 10% do máximo. Você paga pelo que usa por hora.",why:null},
+{q:"A aplicação recebe erros 429 do Cosmos DB. O que significa e como resolver sem aumentar RU/s?",a:"O throughput provisionado foi excedido. Soluções sem aumentar RU/s: otimizar queries (adicionar índices, filtrar por partition key). O SDK já faz retry com backoff exponencial automaticamente.",why:null}
+]},
+
+{id:"t9",num:"09",domain:"data",week:3,title:"Change Feed do Cosmos DB",tag:"AI Data · Semana 3",tagColor:"p",
+summary:"Log persistente e ordenado de inserções e updates. Permite reagir a mudanças em tempo real — fundamental para gerar embeddings automaticamente.",
+sections:[
+{title:"Como funciona",content:`Toda insert ou update é registrada no change feed, partição por partição, em ordem cronológica. É um log persistente — você pode ler desde o início, a partir de agora, ou de um checkpoint.
+
+Deletions: por padrão NÃO são capturadas. Para capturar, habilite AllVersionsAndDeletes mode.
+
+Lease container: container auxiliar ("leases") onde o processor guarda o checkpoint. Permite múltiplas instâncias dividirem o trabalho e retomarem após restart.
+
+Múltiplas instâncias: N processors em paralelo — o Cosmos DB distribui as partições automaticamente.
+
+Resiliência: se o processor parar por horas, ao reiniciar retoma do checkpoint e processa todos os documentos que chegaram durante a pausa.`,
+code:`const leaseContainer = client.database("ai-db").container("leases");
+const monitoredContainer = client.database("ai-db").container("docs");
+
+const processor = monitoredContainer.items
+  .getChangeFeedProcessor(
+    "embedding-generator",  // nome único do processor
+    leaseContainer,
+    { changeFeedProcessorOptions: { startTime: new Date() } },
+    async (changes) => {
+      for (const item of changes) {
+        if (!item.embedding) {
+          const emb = await generateEmbedding(item.content);
+          await monitoredContainer.items.upsert({ ...item, embedding: emb });
+        }
+      }
+    }
+  );
+
+await processor.start();`,lang:"typescript"}
+],
+analogy:"O Change Feed é o extrato bancário do Cosmos DB. Toda transação é registrada em ordem. Você pode ter múltiplos 'clientes' (processors) que leem o extrato de forma independente, cada um com seu marcador de onde parou.",
+tactic:"Implemente um processor Node.js que loga cada mudança e insira documentos em outro terminal. Ver as mudanças chegando em tempo real é a melhor forma de entender o conceito.",tacticColor:"p",
+whenuse:{"yes": ["Você precisa reagir a inserções/updates no Cosmos DB sem modificar o código que escreve os dados", "Pipeline de AI: gerar embeddings automaticamente quando um novo documento é salvo", "Sincronização em tempo real com outro sistema (data warehouse, cache, search index)", "Múltiplas instâncias de processamento que precisam dividir o trabalho sem coordenação manual"], "no": ["Você precisa reagir a DELETES (use AllVersionsAndDeletes mode — tem custo extra e complexidade)", "Você só precisa de um webhook simples (use Azure Function com Cosmos DB trigger — mais simples)", "O processamento pode ser em batch agendado — change feed é para reação em tempo real"]},
+  usecases:[{company:"Plataforma de conteúdo",scenario:"Indexação automática para busca semântica",desc:"Quando um editor publica um artigo, o change feed detecta o novo item e dispara um processor que gera o embedding via Azure OpenAI e atualiza o documento com o campo /embedding. O editor não sabe que isso acontece — para ele, o artigo simplesmente fica 'pesquisável' em segundos.",badge:"geração de embedding"},
+  {company:"Sistema de pedidos",scenario:"Sincronização com data warehouse",desc:"O change feed replica todos os novos pedidos para um Azure Synapse Analytics em tempo real (< 30 segundos de latência). O sistema de BI vê dados quase em tempo real sem impactar o banco de produção com queries pesadas.",badge:"sincronização realtime"},
+  {company:"App de chat com AI",scenario:"Invalidação de cache baseada em mudanças",desc:"Quando um documento da base de conhecimento é atualizado, o change feed processor invalida automaticamente as entradas do semantic cache no Redis relacionadas ao documento. A próxima busca semântica busca contexto atualizado.",badge:"invalidação de cache"}],
+questions:[
+{q:"Você precisa gerar embeddings automaticamente para cada novo documento inserido, sem modificar o código que faz o insert. Como?",a:"Change Feed Processor. Um worker escuta o change feed e, para cada novo item, gera o embedding e atualiza o documento. O código original não precisa saber que isso acontece.",why:null},
+{q:"O processor parou por 2 horas por falha. Ao reiniciar, ele processa os documentos inseridos durante a pausa?",a:"Sim. O lease container guarda o checkpoint. Ao reiniciar, retoma desse ponto e processa todos os documentos que chegaram durante a pausa.",why:null}
+]},
+
+{id:"t10",num:"10",domain:"data",week:3,title:"Vector Search no Cosmos DB",tag:"AI Data · Semana 3",tagColor:"p",
+summary:"Armazenamento e busca de embeddings nativos com índice DiskANN. Novo na AI-200.",
+sections:[
+{title:"Embeddings e DiskANN",content:`Embedding: representação numérica de um texto como array de floats. Textos semanticamente similares ficam próximos no espaço vetorial mesmo sem compartilhar palavras. O modelo text-embedding-3-small do Azure OpenAI gera vetores de 1536 dimensões.
+
+Exemplo: "Como resetar minha senha?" e "Esqueci meu password" têm embeddings muito próximos. "Como fazer bolo?" e "Resetar senha" têm embeddings distantes.
+
+DiskANN: índice criado pela Microsoft Research. Usa disco (não só RAM) — permite datasets maiores.
+Funções de distância: cosine (padrão para texto), dotProduct, euclidean.
+VectorDistance(): função SQL para calcular distância. Score menor = mais similar.`,
+code:`// Gerar embedding da pergunta
+const { data } = await openai.embeddings.create({
+  model: "text-embedding-3-small",
+  input: "Como resetar minha senha?"
+});
+
+// Busca semântica: top 5 mais similares
+const { resources } = await container.items.query({
+  query: \`SELECT TOP 5 c.id, c.content,
+          VectorDistance(c.embedding, @q) AS score
+          FROM c ORDER BY VectorDistance(c.embedding, @q)\`,
+  parameters: [{ name: "@q", value: data[0].embedding }]
+}).fetchAll();
+// score 0.05 = muito similar, score 0.95 = muito diferente`,lang:"typescript"}
+],
+analogy:null,
+tactic:"Insira 20 frases em um container com DiskANN. Execute buscas semânticas e compare os scores. Tente variações da mesma pergunta — ver scores próximos torna o conceito de espaço vetorial concreto.",tacticColor:"p",
+whenuse:{"yes": ["Você já usa Cosmos DB para seus dados JSON e quer adicionar busca semântica no mesmo serviço", "Precisa de escala global para o vector search (Cosmos DB replica os vetores junto com os dados)", "Quer aproveitar o change feed para indexar embeddings automaticamente ao inserir documentos", "Seu dataset de vetores é grande e precisa do DiskANN (otimizado para disco, não só RAM)"], "no": ["Você precisa de filtros relacionais complexos com JOINs (use PostgreSQL + pgvector)", "Você já tem dados no PostgreSQL — não vale migrar só para ter vector search", "Sua base é pequena e latência crítica sub-milissegundo é necessária (use Redis com vector index)"]},
+  usecases:[{company:"Empresa de RH",scenario:"Busca por candidatos similares",desc:"CV de um candidato é convertido em embedding. A query VectorDistance encontra os 10 candidatos mais similares na base de dados por competências, experiência e perfil — sem precisar de busca por palavras-chave exata. 'Engenheiro Node.js sênior' encontra candidatos com 'desenvolvedor JavaScript 8 anos'.",badge:"busca semântica"},
+  {company:"Suporte técnico",scenario:"Sugestão de artigos de FAQ relevantes",desc:"Quando um usuário abre um ticket com 'minha nota fiscal não chegou', o sistema gera o embedding da mensagem e busca os 5 artigos de FAQ mais semanticamente similares via VectorDistance. O agente vê as sugestões instantaneamente antes de responder.",badge:"rag + cosmos db"},
+  {company:"Plataforma jurídica",scenario:"Busca em contratos por cláusulas similares",desc:"Advogado busca 'rescisão por motivo de força maior'. O vector search encontra contratos com cláusulas equivalentes mesmo escritas de formas diferentes: 'encerramento por evento imprevisível', 'dissolução por caso fortuito'. Busca por semântica, não por palavras.",badge:"semantic search"}],
+questions:[
+{q:"Dois resultados retornam VectorDistance = 0.05 e 0.89. Qual é mais similar?",a:"O resultado com score 0.05. VectorDistance retorna a distância — quanto menor, mais próximo (mais similar). Score 0 = idêntico. Score 1 = completamente diferente.",why:null},
+{q:"Qual tipo de índice adicionar ao indexing policy para habilitar busca semântica?",a:"vectorIndexes com type 'diskANN' e o path do campo. Além disso, declarar vectorEmbeddingPolicy especificando dataType, distanceFunction e dimensions.",why:null}
+]},
+
+{id:"t11",num:"11",domain:"data",week:4,title:"Azure Database for PostgreSQL Flexible Server",tag:"AI Data · Semana 4",tagColor:"p",
+summary:"PostgreSQL gerenciado com pgvector. Novidade na AI-200. Ideal quando você combina dados relacionais com busca semântica.",
+sections:[
+{title:"Compute tiers e Connection Pooling",content:`Compute tiers:
+- Burstable (B-series): dev/teste.
+- General Purpose (D-series): produção padrão.
+- Memory Optimized (E-series): para vector search intenso. Índices HNSW vivem em RAM — mais memória = busca mais rápida.
+
+PgBouncer (Connection Pooling built-in):
+PostgreSQL cria 1 processo por conexão. Functions serverless criam conexões por request — esgota rapidamente.
+
+PgBouncer: proxy de connection pooling.
+- Session mode: conexão mantida por toda a sessão. Não reduz muito.
+- Transaction mode: conexão liberada após cada transação. Ideal para serverless. Permite centenas de clientes com dezenas de conexões físicas.
+
+Quando usar PostgreSQL vs Cosmos DB para vetores:
+PostgreSQL: dados relacionais + vetores, JOINs complexos com metadata.
+Cosmos DB: escala global, JSON + vetores, change feed para pipelines de AI.`}
+],
+analogy:null,
+tactic:"Simule o problema de conexões: conecte 50 clients simultâneos sem PgBouncer (erros FATAL: too many connections) e com PgBouncer (tudo funciona). O problema se torna físico e memorável.",tacticColor:"p",
+whenuse:{"yes": ["Você precisa combinar dados relacionais (clientes, pedidos, projetos) com vector search no mesmo banco", "Queries precisam de filtros SQL complexos junto com a busca semântica (WHERE + ORDER BY embedding)", "Seu time conhece SQL e prefere evitar aprender a API NoSQL do Cosmos DB", "Você quer aproveitar features SQL avançadas: transações ACID, triggers, views, stored procedures"], "no": ["Você precisa de escala global multi-região automática (use Cosmos DB)", "Seu schema é puramente de documentos JSON sem relações (use Cosmos DB)", "Você precisa de latência sub-milissegundo para os vetores (use Redis)", "Seu volume de writes é extremamente alto e o schema é flexível (use Cosmos DB)"]},
+  usecases:[{company:"Plataforma SaaS B2B",scenario:"Dados relacionais + busca semântica no mesmo banco",desc:"Clientes têm projetos, projetos têm documentos, documentos têm embeddings. A query combina: WHERE project.client_id = ? (filtro relacional) com ORDER BY embedding <=> queryVec (vector search). Impossível no Cosmos DB sem desnormalizar tudo.",badge:"relacional + vetorial"},
+  {company:"Startup de AI",scenario:"Azure Functions consumindo PostgreSQL",desc:"50 Functions simultâneas geravam 'too many connections'. Solução: habilitar PgBouncer no Flexible Server com transaction mode. As Functions se conectam à porta 6432. O PgBouncer mantém 10 conexões físicas para 50 clients. Problema resolvido sem aumentar o servidor.",badge:"pgbouncer"},
+  {company:"Sistema de e-commerce",scenario:"Vector search intensivo em catálogo",desc:"Busca semântica em 5M de produtos com embeddings de 1536 dims. O servidor Memory Optimized (E-series) mantém o índice HNSW inteiro em RAM. Latência: 3ms. O General Purpose (D-series) paginava o índice para disco — latência: 180ms.",badge:"memory optimized"}],
+questions:[
+{q:"Azure Functions recebem erros 'too many connections' do PostgreSQL. Como resolver sem aumentar o servidor?",a:"Habilitar PgBouncer no Flexible Server com transaction mode. As Functions se conectam ao PgBouncer (porta 6432), que gerencia um pool menor de conexões físicas.",why:null},
+{q:"Qual compute tier para workloads de vector search com índices HNSW?",a:"Memory Optimized (série E). Índices HNSW são carregados em RAM. Quanto mais RAM, mais do índice fica em memória e menor a latência.",why:null}
+]},
+
+{id:"t12",num:"12",domain:"data",week:4,title:"pgvector — HNSW e IVFFlat",tag:"AI Data · Semana 4",tagColor:"p",
+summary:"Extensão do PostgreSQL para vetores. Adiciona tipos de dados e índices de similaridade. Novo na AI-200.",
+sections:[
+{title:"Operadores e índices",content:`3 operadores de distância:
+- <=> Cosine distance: padrão para text embeddings. Independe do comprimento.
+- <-> L2 (Euclidiana): para embeddings não normalizados.
+- <#> Inner product: para embeddings normalizados.
+
+HNSW: melhor recall (~99%), uso alto de RAM, build lento. Use em produção.
+IVFFlat: menor RAM, build rápido, recall ~95%. Use quando dataset muda frequentemente.
+Sem índice: brute force, 100% exato, só para dev e datasets < 10k rows.
+
+Parâmetros HNSW:
+- m: conexões por nó (padrão 16). Mais alto = melhor recall, mais RAM.
+- ef_construction: qualidade do build (padrão 64).
+- ef_search: candidatos na busca (runtime). Trade-off recall × velocidade.`,
+code:`CREATE EXTENSION IF NOT EXISTS vector;
+
+CREATE TABLE docs (
+  id        UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  content   TEXT,
+  metadata  JSONB,
+  embedding vector(1536)
+);
+
+-- Índice HNSW para cosine similarity (produção)
+CREATE INDEX ON docs
+  USING hnsw (embedding vector_cosine_ops)
+  WITH (m = 16, ef_construction = 64);
+
+-- Ajustar recall na busca
+SET hnsw.ef_search = 100;
+
+-- Busca com metadata filter (relacional + vetorial!)
+SELECT content, embedding <=> '[...]'::vector AS dist
+FROM docs
+WHERE metadata->>'project_id' = 'proj-123'
+ORDER BY dist LIMIT 5;`,lang:"sql"}
+],
+analogy:"HNSW é como um índice de livros muito organizado — achar qualquer livro é rápido, mas construir o catálogo levou semanas. IVFFlat é como organizar livros em armários por tema — mais simples de montar, um pouco menos preciso para encontrar o livro exato.",
+tactic:"Insira 50.000 rows com vetores. Meça com EXPLAIN ANALYZE: (1) sem índice, (2) com IVFFlat, (3) com HNSW. Os números de latência e 'Seq Scan vs Index Scan' tornam a diferença concreta.",tacticColor:"p",
+whenuse:{"tip": true, "items": ["<strong>HNSW em produção</strong>: quando recall alto (~99%) é crítico e o dataset não muda frequentemente. Ex: busca em base jurídica onde falsos negativos têm custo alto. Requer Memory Optimized (E-series) para manter o índice em RAM.", "<strong>IVFFlat</strong>: quando o dataset muda frequentemente (rebuild do índice é necessário), ou memória é limitada e um recall de ~95% é aceitável.", "<strong>Sem índice (brute force)</strong>: apenas em desenvolvimento ou datasets com menos de 10.000 registros. Não use em produção.", "<strong>Operador <=></strong>: sempre para text embeddings (cosine distance). Independe do comprimento do vetor.", "<strong>Operador <-></strong>: use para embeddings de imagens ou embeddings não normalizados onde a magnitude importa."]},
+  usecases:[{company:"Plataforma de notícias",scenario:"'Artigos relacionados' por similaridade de conteúdo",desc:"Cada artigo tem um embedding do seu conteúdo. Ao abrir um artigo, a query usa <=> (cosine) para buscar os 5 artigos mais similares. 'Eleições EUA' mostra artigos sobre 'Democracia americana', 'Candidatos presidenciais', 'Sistema eleitoral' — mesmo sem palavras em comum.",badge:"cosine similarity"},
+  {company:"Plataforma jurídica",scenario:"Escolha entre HNSW e IVFFlat",desc:"Base de 2M de cláusulas contratuais. Testaram IVFFlat (build rápido, recall 93%) vs HNSW (build 4x mais lento, recall 99%). Como a base não muda frequentemente e falsos negativos têm custo alto (advogado perde um contrato relevante), escolheram HNSW em produção.",badge:"hnsw vs ivfflat"},
+  {company:"Sistema de compliance",scenario:"Filtro relacional + vetorial combinado",desc:"'Busque contratos similares a este trecho, somente de clientes com risco alto, nos últimos 6 meses'. A query: WHERE risk_level='high' AND created_at > now()-interval '6 months' ORDER BY embedding <=> queryVec LIMIT 10. Isso é impossível em bancos de vetores puros.",badge:"metadata filter"}],
+questions:[
+{q:"Em produção com alta demanda de recall, qual índice pgvector usar?",a:"HNSW com vector_cosine_ops para text embeddings. Oferece ~99% de recall com latência sub-milissegundo em produção.",why:null},
+{q:"Qual operador pgvector usar para text embeddings do Azure OpenAI?",a:"<=> (cosine distance). É o padrão para embeddings de texto — mede o ângulo entre vetores, independente da magnitude.",why:null},
+{q:"Você precisa buscar os 5 documentos mais similares, somente entre documentos de um projeto específico. Vantagem do PostgreSQL?",a:"SQL rico com JOINs e filtros relacionais. Você combina vector similarity search com filtros de metadata complexos em uma única query SQL. No Cosmos DB os filtros são mais limitados.",why:null}
+]},
+
+{id:"t13",num:"13",domain:"data",week:4,title:"Padrão RAG (Retrieval-Augmented Generation)",tag:"AI Data · Semana 4",tagColor:"p",
+summary:"Arquitetura para criar assistentes com base em documentos próprios sem fine-tuning. Novo na AI-200.",
+sections:[
+{title:"O problema e a solução",content:`O problema: um LLM como GPT-4o não sabe nada sobre seus documentos internos. E mesmo que soubesse, inventaria respostas (alucina). Fine-tuning é caro e não atualiza em tempo real.
+
+RAG resolve: busca os documentos relevantes no banco de dados em tempo real e injeta no prompt. O modelo responde baseado em fatos reais que você forneceu.
+
+Chunking — preparar os documentos:
+Antes de indexar, divida documentos em chunks menores.
+- Modelos de embedding têm limite de tokens (~8000).
+- Chunks específicos têm embeddings mais precisos que documentos completos.
+- Overlap (ex: 50 tokens): sobreposição entre chunks evita perder contexto na fronteira.
+
+Fluxo: Pergunta → Embed → Vector Search → Montar prompt com contexto → Azure OpenAI → Resposta`,
+code:`async function rag(question: string): Promise<string> {
+  // 1. Embed a pergunta
+  const { data } = await openai.embeddings.create({
+    model: "text-embedding-3-small", input: question
+  });
+
+  // 2. Buscar contexto relevante
+  const docs = await sql\`
+    SELECT content, title FROM docs
+    ORDER BY embedding <=> \${JSON.stringify(data[0].embedding)}::vector
+    LIMIT 5\`;
+
+  // 3. Montar prompt com contexto (o núcleo do RAG)
+  const context = docs.map(d => \`[\${d.title}]\n\${d.content}\`).join("\\n---\\n");
+
+  const resp = await openai.chat.completions.create({
+    model: "gpt-4o",
+    messages: [
+      { role: "system", content: "Responda APENAS com base no contexto fornecido." },
+      { role: "user", content: \`Contexto:\\n\${context}\\n\\nPergunta: \${question}\` }
+    ]
+  });
+
+  return resp.choices[0].message.content!;
+}`,lang:"typescript"}
+],
+analogy:"RAG é como um estudante de medicina fazendo prova com livros abertos. Ele não precisa memorizar tudo — precisa saber encontrar a informação certa no livro certo e sintetizar a resposta. O 'livro' é sua base vetorial, o 'estudante' é o LLM.",
+tactic:"Implemente RAG com 10 documentos de FAQ fictícia. Faça perguntas que estão nos documentos e que não estão. Observe como a instrução 'responda só com o contexto' impede alucinações. A diferença com/sem contexto é reveladora.",tacticColor:"p",
+whenuse:{"yes": ["Você quer que um LLM responda com base nos seus documentos internos sem fine-tuning", "A base de conhecimento muda frequentemente (novos documentos, atualizações) — fine-tuning seria caro demais", "Você precisa que as respostas sejam auditáveis (você pode mostrar quais trechos embasaram a resposta)", "Chatbots de suporte, assistentes de documentação, Q&A sobre manuais e regulamentos"], "no": ["Você quer mudar o comportamento do modelo (tom, personalidade, estilo) — use fine-tuning", "Sua base de conhecimento é estática, pequena e cabe no context window do modelo", "Você não tem estrutura para manter um pipeline de indexação e busca de vetores"]},
+  usecases:[{company:"Banco digital",scenario:"Assistente de atendimento com base de regulamentos",desc:"O banco tem 500 documentos de regulamentos do Banco Central. O RAG indexa todos com embeddings. Quando um atendente pergunta 'qual o prazo para estorno de PIX?', o sistema busca os trechos mais relevantes e o LLM responde com base nos regulamentos reais — sem inventar. Auditável e preciso.",badge:"rag compliance"},
+  {company:"Empresa de software",scenario:"Documentação técnica interna como assistente",desc:"1200 páginas de documentação interna do produto. Devs perguntam em linguagem natural: 'como configurar autenticação SAML?'. O RAG encontra os 3 chunks mais relevantes e o LLM sintetiza a resposta. Adoção do produto interno subiu 40%.",badge:"rag docs"},
+  {company:"Clínica médica",scenario:"Histórico de pacientes como contexto",desc:"Médico pergunta 'paciente tem contraindicação para ibuprofeno?'. O RAG busca os chunks relevantes do prontuário (alergias, medicamentos atuais, diagnósticos) e o LLM responde com base no histórico real do paciente. O modelo não 'inventa' — só usa o contexto fornecido.",badge:"rag médico"}],
+questions:[
+{q:"Um assistente de suporte responde perguntas sobre manuais técnicos. O modelo não deve inventar respostas. Qual padrão usar?",a:"RAG. Os manuais são indexados com embeddings. Para cada pergunta, você busca chunks relevantes por vector search e injeta como contexto no prompt, instruindo o modelo a só usar o contexto fornecido.",why:null},
+{q:"Por que dividir documentos em chunks menores antes de gerar embeddings?",a:"(1) Modelos de embedding têm limite de tokens. (2) Chunks específicos geram embeddings mais precisos. (3) O contexto injetado no prompt fica mais relevante quando você recupera chunks específicos.",why:null}
+]},
+
+{id:"t14",num:"14",domain:"data",week:5,title:"Azure Managed Redis",tag:"AI Data · Semana 5",tagColor:"p",
+summary:"Redis Enterprise gerenciado. Na AI-200 aparece como cache de dados e banco de vetores para semantic caching. Novo na AI-200.",
+sections:[
+{title:"Cache-aside pattern",content:`Antes de ir ao banco, verifique o cache.
+Hit: retorne em < 1ms (cache hit).
+Miss: vá ao banco, guarde no cache com TTL, retorne (cache miss).
+Update: quando o dado muda, delete a chave (invalidação).
+
+TTL (Time To Live): expiração automática. Previne dados stale.
+
+Quando usar Redis para vetores vs Cosmos DB vs PostgreSQL:
+Redis: latência sub-milissegundo, dataset pequeno-médio (cabe em RAM), dados efêmeros.
+Cosmos DB: escala global, datasets grandes, JSON + vetores.
+PostgreSQL: dados relacionais + vetores, JOINs complexos.`,
+code:`import { createClient } from "redis";
+const redis = await createClient({ url: process.env.REDIS_URL }).connect();
+
+// Cache-aside pattern
+async function getUserById(userId: string) {
+  const cacheKey = \`user:\${userId}\`;
+
+  // Tenta o cache (hit)
+  const cached = await redis.get(cacheKey);
+  if (cached) return JSON.parse(cached);
+
+  // Cache miss — vai ao banco
+  const user = await db.findUser(userId);
+
+  // Guarda no cache com TTL de 15 minutos
+  await redis.set(cacheKey, JSON.stringify(user), { EX: 900 });
+  return user;
+}
+
+// Invalidar quando o dado muda
+async function updateUser(userId: string, data: any) {
+  await db.updateUser(userId, data);
+  await redis.del(\`user:\${userId}\`); // invalida cache
+}`,lang:"typescript"}
+],
+analogy:"Redis é a memória de curto prazo do sistema. O banco de dados é a memória de longo prazo. Buscar na memória de curto prazo leva milissegundos. Buscar no 'HD' leva centenas de milissegundos.",
+tactic:"Implemente o cache-aside e meça com performance.now() a diferença entre hit e miss. Ver '0.3ms vs 45ms' no console é mais convincente que qualquer explicação teórica.",tacticColor:"p",
+whenuse:{"yes": ["Dados lidos com alta frequência e que mudam com pouca frequência (perfis de usuário, configurações, catálogo de produtos)", "Você quer reduzir latência de leitura de 50ms (banco) para < 1ms (cache)", "Sessões de usuário, carrinhos de compra, tokens de autenticação com TTL", "Leaderboards e rankings em tempo real com Sorted Sets"], "no": ["Dados que mudam muito frequentemente — o overhead de invalidar o cache pode superar o benefício", "Dados que precisam de consistência forte — o cache pode ter versão desatualizada", "Datasets grandes que não cabem na memória disponível (Redis é in-memory — limite de RAM)"]},
+  usecases:[{company:"App de e-commerce",scenario:"Cache de sessão de carrinho de compras",desc:"A cada request do usuário, buscar o carrinho no banco (SQL ou Cosmos) levaria 30-50ms. Com Redis: o carrinho fica cacheado com TTL de 30 minutos. 95% das requests retornam em < 1ms. O banco de dados recebe 95% menos queries de leitura.",badge:"cache-aside"},
+  {company:"Plataforma de jogos",scenario:"Leaderboard em tempo real",desc:"Sorted Set do Redis mantém o ranking de milhares de jogadores atualizado em tempo real. ZADD para atualizar score, ZRANGE para buscar top 100. Latência < 1ms. Um banco de dados relacional levaria 200ms+ para a mesma query com ORDER BY em milhões de registros.",badge:"sorted set"},
+  {company:"Sistema de AI",scenario:"Semantic cache para reduzir custo de OpenAI",desc:"Um chatbot de suporte recebia 10.000 perguntas/dia. Após implementar semantic cache no Redis, 62% das perguntas eram semanticamente similares a respostas já cacheadas. Custo mensal de API: de R$ 4.200 para R$ 1.600. Sem mudança na experiência do usuário.",badge:"semantic cache"}],
+questions:[
+{q:"Um dado cacheado foi atualizado no banco. O que fazer para garantir que a próxima leitura retorne o dado atualizado?",a:"Invalidar o cache (redis.del(chave)) após a atualização. A próxima leitura será um miss, buscará o dado atualizado e o guardará no cache novamente.",why:null},
+{q:"Quando Azure Managed Redis é a melhor escolha como banco de vetores?",a:"Quando você precisa de latência sub-milissegundo, o dataset cabe em RAM, os dados são efêmeros (session-level, semantic cache), ou quer combinar cache de dados com busca semântica no mesmo serviço.",why:null}
+]},
+
+{id:"t15",num:"15",domain:"data",week:5,title:"Semantic Cache com Redis",tag:"AI Data · Semana 5",tagColor:"p",
+summary:"Cache de chamadas LLM usando similaridade semântica. Reduz drasticamente custo de tokens e latência. Novo na AI-200.",
+sections:[
+{title:"Por que cache tradicional não basta para LLMs",content:`Cache tradicional usa igualdade exata de strings. "Qual o horário de funcionamento?" e "Que horas vocês abrem?" são chaves DIFERENTES → dois cache misses → duas chamadas caras ao OpenAI.
+
+Com semantic cache: você converte a pergunta em embedding e usa KNN search para encontrar respostas semanticamente similares no Redis. Similaridade > 0.95 → mesma pergunta → retorne a resposta cacheada. Zero custo de token, < 1ms de latência.
+
+Threshold: o valor de similaridade a partir do qual você considera "mesma pergunta". 0.95 = conservador (alta precisão). 0.80 = mais agressivo.
+
+Impacto: em apps conversacionais, pode reduzir até 60% das chamadas ao LLM.`}
+],
+analogy:"Semantic cache é como um funcionário de suporte experiente. Quando alguém pergunta 'como reseto minha senha?', ele reconhece que é a mesma coisa que 'esqueci meu password' e dá a mesma resposta sem consultar o manual.",
+tactic:"Implemente semantic cache básico e colete 20 perguntas variadas sobre o mesmo tema. Meça quantas chamadas ao OpenAI foram necessárias com vs sem cache.",tacticColor:"p",
+whenuse:{"yes": ["Sua aplicação faz muitas chamadas ao Azure OpenAI com perguntas similares dos usuários", "O custo de tokens é alto e você quer reduzir sem degradar a experiência", "Chatbots de suporte, FAQ, assistentes onde perguntas se repetem com frequência", "Você já usa Redis e quer aproveitar a mesma infraestrutura para cache semântico"], "no": ["Todas as perguntas são genuinamente únicas — o overhead de gerar o embedding para consultar o cache não vale", "Você precisa de respostas sempre atualizadas (ex: preços em tempo real, dados que mudam por segundo)", "Seu volume de chamadas é baixo — o custo de manter Redis não compensa a economia de tokens"]},
+  usecases:[{company:"Empresa de RH",scenario:"Chatbot de triagem de candidatos",desc:"Candidatos fazem as mesmas 20 perguntas ('Qual o salário?', 'Tem home office?', 'Quais os benefícios?'). Com semantic cache, 80% das perguntas são respondidas do cache em < 1ms. Apenas perguntas genuinamente novas vão ao Azure OpenAI. Redução de 78% no custo de tokens.",badge:"80% hit rate"},
+  {company:"Plataforma de suporte",scenario:"FAQ dinâmico sem base estática",desc:"Em vez de manter uma lista rígida de FAQs, o semantic cache aprende organicamente. As perguntas mais frequentes ficam no cache com alta taxa de hit. Perguntas raras e únicas vão ao LLM. O sistema fica mais eficiente com o tempo, sem configuração manual.",badge:"cache adaptativo"},
+  {company:"E-commerce de moda",scenario:"Recomendações de produtos similares",desc:"'Me mostre roupas similares a esta peça' — o semantic cache guarda as recomendações para embeddings de produtos já consultados. Quando outro usuário faz consulta semanticamente similar, retorna do cache. Latência: 2ms vs 800ms da chamada ao modelo.",badge:"product similarity"}],
+questions:[
+{q:"Os custos de API do Azure OpenAI estão altos pois muitos usuários fazem perguntas similares. Qual solução?",a:"Semantic cache com Azure Managed Redis. Antes de cada chamada ao OpenAI, gere o embedding da pergunta e faça KNN search no Redis. Se a similaridade for >= threshold, retorne a resposta cacheada.",why:null},
+{q:"O que diferencia semantic cache de cache de string normal?",a:"Vector similarity search. Em vez de comparar strings exatas, você converte a pergunta em embedding e usa KNN search para encontrar respostas semanticamente similares. Requer índice vetorial (HNSW ou FLAT) no Redis.",why:null}
+]},
+
+// ─── MESSAGING ───
+{id:"t16",num:"16",domain:"messaging",week:6,title:"Azure Service Bus",tag:"Mensageria · Semana 6",tagColor:"g",
+summary:"Message broker enterprise com garantia de entrega, ordering e transações. O backbone de pipelines de AI que precisam de confiabilidade.",
+sections:[
+{title:"Queue vs Topic/Subscription e Sessions",content:`Queue — ponto a ponto:
+Uma mensagem é consumida por exatamente UM consumer. Para jobs de processamento únicos.
+
+Message lock: mensagem fica "invisible" para outros pelo tempo de lock (padrão: 60s). O consumer deve:
+- Complete: processei com sucesso → remove da fila.
+- Abandon: devolve para a fila (outro consumer pode pegar).
+- Dead-letter: move para DLQ (dados inválidos).
+- Timeout: lock expira → mensagem volta automaticamente para a fila.
+
+maxDeliveryCount: tentativas antes de ir para a DLQ. Padrão: 10.
+
+Topic + Subscriptions — pub/sub:
+1 mensagem publicada + 3 subscriptions = 3 cópias independentes.
+Filters em subscriptions: filtra por propriedades da mensagem.
+
+Sessions — ordered processing:
+Mensagens com mesmo sessionId são processadas pela mesma instância do consumer, em ordem FIFO. Use quando eventos de um mesmo usuário devem ser processados em sequência.`}
+],
+analogy:"Queue = sistema de senhas de um banco. Uma senha é chamada por exatamente um caixa. Topic = rádio AM. A estação emite uma vez. Todos os ouvintes (subscriptions) recebem o mesmo sinal simultaneamente, de forma independente.",
+tactic:"Crie uma fila, envie 5 mensagens e processe com duas instâncias em paralelo. Observe que nenhuma mensagem é processada duas vezes. Depois lance uma exception propositalmente — observe a mensagem voltar para a fila e eventualmente ir para a DLQ.",tacticColor:"g",
+whenuse:{"yes": ["Você precisa de garantia de entrega at-least-once — mensagem nunca pode ser perdida", "Ordering importa (use Sessions com sessionId)", "Múltiplos sistemas precisam reagir ao mesmo evento de forma independente (use Topics + Subscriptions)", "Jobs de AI que precisam ser processados exatamente uma vez com possibilidade de retry em falha"], "no": ["Você precisa de streaming de altíssimo volume (> 100k eventos/s) — use Event Hubs", "O evento é reativo e precisa notificar N sistemas sem garantia forte — use Event Grid", "Sua mensagem tem mais de 256KB (padrão) ou mais de 100MB (Premium) — considere armazenar no Blob e só passar a referência"]},
+  usecases:[{company:"Marketplace de pagamentos",scenario:"Processamento garantido de transações financeiras",desc:"Cada transação é uma mensagem na fila do Service Bus. Se o processador falha (queda de servidor, timeout do banco), a mensagem volta para a fila e é reprocessada automaticamente. Com dead-letter queue, transações que falham 10x são isoladas para análise — nunca perdidas silenciosamente.",badge:"garantia de entrega"},
+  {company:"Sistema de pedidos",scenario:"Notificação de múltiplos sistemas em um evento",desc:"Quando um pedido é confirmado, uma mensagem vai para um topic. 3 subscriptions recebem cópias independentes: serviço de email (envia confirmação), serviço de estoque (reserva itens) e analytics (registra conversão). Se o serviço de email cair, os outros dois continuam processando.",badge:"topic + subscriptions"},
+  {company:"Banco digital",scenario:"Eventos de conta de um usuário em ordem",desc:"Crédito, débito, taxa, estorno — todos os eventos da conta do usuário precisam ser processados em ordem cronológica. Sessions com sessionId=accountId garante que todos os eventos da conta 'C001' vão para o mesmo consumer instance, em ordem FIFO.",badge:"sessions fifo"}],
+questions:[
+{q:"Uma mensagem de pagamento precisa notificar simultaneamente: email, analytics e estoque. Como modelar?",a:"Topic com 3 subscriptions. Quando o pagamento é publicado no topic, cada subscription recebe uma cópia independente.",why:null},
+{q:"Eventos de um mesmo usuário precisam ser processados em ordem cronológica. Qual feature usar?",a:"Sessions com sessionId = userId. Todas as mensagens do mesmo usuário têm o mesmo sessionId, garantindo processamento FIFO pela mesma instância.",why:null},
+{q:"Uma Function recebeu uma mensagem do Service Bus mas o processamento falhou. O que acontece?",a:"O lock expira e a mensagem volta para a fila (delivery count + 1). Após atingir maxDeliveryCount (padrão 10), a mensagem vai automaticamente para a Dead-Letter Queue.",why:null}
+]},
+
+{id:"t17",num:"17",domain:"messaging",week:6,title:"Dead-Letter Queue (DLQ)",tag:"Mensageria · Semana 6",tagColor:"g",
+summary:"Sub-fila automática para mensagens que não podem ser processadas. Sem DLQ, mensagens-problema causam loops infinitos.",
+sections:[
+{title:"Quando uma mensagem vai para a DLQ",content:`maxDeliveryCount excedido: falhou N vezes (padrão: 10) → DLQ automaticamente.
+TTL expirado: ficou na fila mais tempo que o TimeToLive configurado.
+Dead-letter manual: o consumer move explicitamente para dados inválidos irrecuperáveis.
+Filter evaluation error: erro ao avaliar filtro de subscription.
+
+Como acessar a DLQ:
+Path: nome-da-fila/$DeadLetterQueue
+Crie uma Function ou worker com trigger nesse path para processar, alertar ou arquivar.
+
+Boas práticas:
+- Crie alerta no Azure Monitor quando DLQ message count > 0.
+- Nunca ignore a DLQ — ela acumula silenciosamente.
+- Guarde o motivo de dead-letter no log para análise.`}
+],
+analogy:"A DLQ é a caixa de 'devolvidos' dos Correios. Cartas que não puderam ser entregues vão para lá. Sem monitorar, se acumulam silenciosamente. Em sistemas de AI, uma mensagem na DLQ pode ser um dado de cliente perdido.",
+tactic:"Crie uma Function que sempre lança exception para mensagens com um campo específico. Observe as mensagens indo para a DLQ após 10 tentativas. Configure o alerta do Azure Monitor. Ver o alerta disparar é mais impactante que ler sobre ele.",tacticColor:"g",
+whenuse:{"tip": true, "items": ["<strong>Configure sempre</strong>: toda fila e topic do Service Bus em produção deve ter a DLQ monitorada. Nunca deixe a DLQ crescer silenciosamente.", "<strong>Dead-letter manual</strong>: use quando o consumer detecta dados inválidos irrecuperáveis (CPF malformado, JSON corrompido) — move para DLQ com uma razão clara para análise posterior.", "<strong>Ajuste maxDeliveryCount</strong>: o padrão é 10. Para operações idempotentes simples, 3 é suficiente. Para operações com dependências externas instáveis, 10–15 faz sentido.", "<strong>Azure Monitor alert</strong>: sempre crie um alerta quando DLQ message count > 0. O time deve ser notificado imediatamente, não descobrir na reclamação de usuário horas depois.", "<strong>Worker dedicado para DLQ</strong>: crie uma Function separada com trigger na DLQ para processar, alertar e arquivar as mensagens problemáticas de forma estruturada."]},
+  usecases:[{company:"Plataforma de AI",scenario:"Documentos malformados que travam o pipeline",desc:"Um batch de documentos tinha arquivos corrompidos. A Function de geração de embeddings falhava ao tentar parsear o JSON. Após 10 tentativas, os documentos corrompidos foram para a DLQ automaticamente — o pipeline continuou processando os outros 9.990 documentos normalmente. O time foi alertado pelo Azure Monitor.",badge:"isolamento de falhas"},
+  {company:"Sistema de pedidos",scenario:"Pedidos com dados inválidos",desc:"Um pedido chegou com CPF inválido. Em vez de deixar a mensagem travar a fila, o consumer fez dead-letter manual com a razão 'cpf_invalido'. O time de suporte tem uma Function monitorando a DLQ que envia email automático para o cliente pedir correção.",badge:"dead-letter manual"},
+  {company:"Fintech",scenario:"Monitoramento proativo de saúde do pipeline",desc:"Um alerta no Azure Monitor dispara quando DLQ message count > 0. O time recebe uma notificação no Teams em menos de 5 minutos. Sem esse alerta, o acúmulo seria percebido apenas na reclamação de usuários — horas depois.",badge:"azure monitor alert"}],
+questions:[
+{q:"Mensagens do Service Bus estão desaparecendo após algumas falhas. Onde foram?",a:"Foram para a Dead-Letter Queue após atingir o maxDeliveryCount. Acesse via nome-da-fila/$DeadLetterQueue no portal Azure ou crie uma Function com ServiceBus trigger nesse path.",why:null},
+{q:"Como garantir que a equipe seja alertada quando mensagens inválidas chegam à DLQ?",a:"Criar alerta no Azure Monitor na métrica 'Dead-letter message count' do Service Bus. Quando subir acima de 0, disparar notificação por email/Teams/webhook.",why:null}
+]},
+
+{id:"t18",num:"18",domain:"messaging",week:6,title:"Azure Event Grid",tag:"Mensageria · Semana 6",tagColor:"g",
+summary:"Roteador de eventos reativo. 'Algo aconteceu → notifique N sistemas.' Fan-out de eventos de serviços Azure.",
+sections:[
+{title:"Modelo e features",content:`Event sources nativas: Blob Storage, Cosmos DB, Resource Groups, Container Registry, etc.
+Custom Topics: seu próprio app publica eventos customizados.
+Handlers: Azure Function, Webhook, Service Bus, Event Hubs, Logic Apps.
+Filters: por tipo de evento (Microsoft.Storage.BlobCreated) e por subject (prefixo/sufixo do blob path).
+
+Retry: exponential backoff por até 24h se o handler retornar erro.
+Dead-letter: Storage Blob container onde eventos não entregues são gravados após esgotar retries.
+
+Diferença do Service Bus:
+Event Grid: eventos reativos e fan-out (notificar N sistemas).
+Service Bus: jobs confiáveis (processar por exatamente um consumer, com DLQ).`}
+],
+analogy:"Event Grid é como um serviço de alerta sísmico. Quando um terremoto acontece, notifica simultaneamente: sismólogos, defesa civil, apps de celular. Cada um recebe a mesma notificação e reage independentemente. Ninguém 'processa' o terremoto — apenas reagem.",
+tactic:"Configure Blob Storage para emitir eventos para uma Azure Function via Event Grid. Faça upload de um arquivo e observe a Function ser disparada. Depois crie uma segunda subscription e veja a Function ser chamada duas vezes — o fan-out em ação.",tacticColor:"g",
+whenuse:{"yes": ["Você quer reagir a eventos nativos de serviços Azure (Blob Storage, Cosmos DB, Resource Groups) sem código extra", "Fan-out: um evento precisa notificar múltiplos sistemas de forma independente", "Eventos são pequenos (< 1MB) e o padrão é 'fire and forget' com retry automático", "Orquestração baseada em eventos: blob criado → Function dispara → pipeline inicia"], "no": ["Você precisa de garantia de entrega forte com ordering e dead-letter (use Service Bus)", "Seu payload é grande (> 1MB) — Event Grid não suporta payloads grandes (passe referência ao Blob)", "Você precisa de streaming de alta frequência contínua (use Event Hubs)", "O consumer precisa processar a mensagem exatamente uma vez com lock (use Service Bus)"]},
+  usecases:[{company:"Plataforma de documentos",scenario:"Pipeline de processamento ao fazer upload",desc:"Usuário faz upload de um PDF. O Blob Storage emite um evento BlobCreated para o Event Grid. 3 subscriptions reagem: Function de OCR (extrai texto), Function de antivírus (verifica o arquivo) e Function de geração de thumbnail. Cada uma processa independentemente, em paralelo.",badge:"fan-out paralelo"},
+  {company:"Sistema de e-commerce",scenario:"Reação a mudanças de preço no Cosmos DB",desc:"Quando um preço é atualizado no Cosmos DB, um evento vai para o Event Grid. A subscription do serviço de cache invalida as entradas de preço no Redis. A subscription de analytics registra o histórico de preços. Tudo sem o serviço de produtos saber que isso acontece.",badge:"event-driven"},
+  {company:"Empresa de IoT",scenario:"Orquestração de alertas de dispositivos",desc:"Sensor detecta temperatura crítica. Evento customizado vai para um Custom Topic do Event Grid com propriedades 'severity=critical, device_id=d123'. Subscription com filter só recebe events com severity=critical. A Function de alerta SMS é disparada apenas quando realmente necessário.",badge:"event filters"}],
+questions:[
+{q:"Um PDF é enviado para o Blob Storage. Três sistemas precisam ser notificados: thumbnail, extrator de texto e auditoria. Qual serviço?",a:"Azure Event Grid. O Blob Storage emite BlobCreated nativamente. Crie 3 event subscriptions. Cada sistema recebe o evento independentemente.",why:null},
+{q:"Uma subscription do Event Grid está falhando. O evento vai ser perdido após todos os retries?",a:"Não, se dead-lettering estiver configurado. Configure um Storage Blob container como dead-letter destination. Após esgotar os retries (24h), o evento é gravado no blob.",why:null}
+]},
+
+{id:"t19",num:"19",domain:"messaging",week:6,title:"Azure Functions",tag:"Mensageria · Semana 6",tagColor:"g",
+summary:"Plataforma serverless para executar código em resposta a eventos. O 'cola' de pipelines de AI.",
+sections:[
+{title:"Hosting Plans",content:`Consumption: serverless puro. Paga por execução. Escala a zero. Cold start ~200ms. Para workloads intermitentes.
+
+Premium: sem cold start (instâncias pré-aquecidas). VNet integration. Para funções que não toleram latência de cold start ou acessam recursos em VNet privada.
+
+Dedicated (App Service): sempre ativo. Para execuções muito longas (> 10 min) ou integradas a App Service.
+
+Container Apps: functions em containers com KEDA. Combine serverless com controle de container.
+
+Timeouts:
+- Consumption: máximo 10 minutos.
+- Premium: máximo 60 minutos.
+- Dedicated: sem limite.`}
+],
+analogy:"Functions são garçons chamados conforme demanda. Consumption: zero garçons quando vazio (scale-to-zero), aparecem em ~200ms (cold start). Premium: sempre tem garçons pré-posicionados (sem cold start), mas você paga por eles mesmo sem movimento.",
+tactic:"Crie uma Function no Consumption e meça o cold start com Date.now(). Depois crie a mesma no Premium com 1 always-ready instance e compare. A diferença de 800ms vs 5ms é difícil de esquecer.",tacticColor:"g",
+whenuse:{"tip": true, "items": ["<strong>Consumption</strong>: workloads intermitentes, baixo volume, sem requisito de latência de cold start. Custo zero quando ocioso. Limite de 10 minutos de execução.", "<strong>Premium</strong>: cold start inaceitável, VNet integration necessária, execuções longas (até 60 min), ou quando você precisa de instâncias pré-aquecidas para SLA de latência.", "<strong>Dedicated (App Service)</strong>: execuções muito longas (> 60 min), integração com App Service existente, ou quando você já tem um plano App Service subutilizado.", "<strong>Container Apps</strong>: quando você precisa de KEDA para autoscaling baseado em eventos E controle de container (imagem customizada, sidecar). O modelo mais flexível."]},
+  usecases:[{company:"Startup de AI",scenario:"API de geração de texto sob demanda",desc:"API HTTP-triggered que chama Azure OpenAI. Paga apenas por execução. 1000 requests/mês = custo mínimo. No plano Consumption, cold starts de 200ms são aceitáveis (usuário não percebe). Se o volume crescer para 1M requests/mês, considerar Premium.",badge:"consumption plan"},
+  {company:"Plataforma de trading",scenario:"Execução de ordens com latência crítica",desc:"Function de processamento de ordens precisa responder em < 50ms. O cold start do Consumption (800ms) é inaceitável. Solução: Premium com 2 instâncias always-ready. Zero cold start. A latência constante é necessária mesmo pagando pelo tempo ocioso.",badge:"premium always-ready"},
+  {company:"Sistema de relatórios",scenario:"Geração de relatórios PDF de 300 páginas",desc:"A geração de um relatório completo pode levar 45 minutos. O plano Consumption tem timeout de 10 minutos. Solução: Dedicated (App Service) sem timeout. A Function é disparada por um Timer às 2h da manhã e termina quando o PDF estiver pronto.",badge:"dedicated sem timeout"}],
+questions:[
+{q:"Uma API pública precisa de resposta em < 100ms. O plano Consumption gera cold starts de 800ms. Como resolver?",a:"Migrar para o plano Premium com always-ready instances. O Premium mantém instâncias pré-aquecidas, eliminando cold starts.",why:null},
+{q:"Uma Function precisa acessar um PostgreSQL em uma VNet privada (sem IP público). Qual plano suporta?",a:"Premium ou Dedicated (App Service). O plano Consumption não suporta VNet integration.",why:null}
+]},
+
+{id:"t20",num:"20",domain:"messaging",week:6,title:"Triggers e Bindings",tag:"Mensageria · Semana 6",tagColor:"g",
+summary:"A 'mágica' do Azure Functions — conectam a function a serviços externos sem código boilerplate de infraestrutura.",
+sections:[
+{title:"Trigger, Input e Output",content:`Trigger (1 por function): o que dispara a function. HTTP, Timer, Service Bus, Blob, Event Grid, Cosmos DB change feed.
+
+Input binding: dados adicionais lidos antes de executar. Ex: ler doc do Cosmos DB pelo id da mensagem do trigger — sem código de SDK.
+
+Output binding: onde gravar o resultado. Ex: salvar no Cosmos DB, enviar mensagem, escrever blob — só precisa de um return ou setter. O runtime executa a operação.
+
+Princípio: você escreve apenas a lógica de negócio. O runtime gerencia conexões, autenticação e I/O.`,
+code:`import { app, output } from "@azure/functions";
+
+// Declaração do output binding (Cosmos DB)
+const cosmosOut = output.cosmosDB({
+  databaseName: "ai-db", containerName: "results",
+  connection: "COSMOS_CONNECTION", createIfNotExists: true
+});
+
+// Trigger: Service Bus | Output: Cosmos DB
+// Zero código de SDK para conexão/autenticação!
+app.serviceBusTrigger("processJob", {
+  queueName: "ai-jobs",
+  connection: "SB_CONNECTION",
+  extraOutputs: [cosmosOut],
+  handler: async (msg: any, ctx) => {
+    const embedding = await generateEmbedding(msg.text);
+
+    // Output binding — o runtime salva no Cosmos automaticamente
+    ctx.extraOutputs.set(cosmosOut, {
+      id: msg.id, embedding,
+      processedAt: new Date().toISOString()
+    });
+  }
+});`,lang:"typescript"}
+],
+analogy:"Bindings são como conectores elétricos padronizados. Você não precisa saber como a energia chega à tomada — só encaixa o plugue (binding) e a eletricidade flui. O Azure gerencia toda a infraestrutura de 'energia' por baixo.",
+tactic:"Implemente a mesma funcionalidade com output binding e com SDK direto. Compare as linhas de código. A redução de 30 linhas para 3 justifica a abstração.",tacticColor:"g",
+whenuse:{"yes": ["Você quer eliminar código boilerplate de conexão, autenticação e retry com serviços Azure", "Pipeline simples: disparado por evento → lê dados → processa → salva resultado", "Você prefere declarar integrações como configuração ao invés de código SDK"], "no": ["Você precisa de lógica complexa de retry customizada além do que o runtime oferece", "Você precisa de controle fino sobre transações entre múltiplos serviços", "O binding não suporta o serviço que você precisa — aí sim use o SDK diretamente"]},
+  usecases:[{company:"Sistema de AI",scenario:"Pipeline de embedding sem código de infraestrutura",desc:"Function disparada pelo Service Bus recebe o id do documento. O input binding do Cosmos DB busca o documento automaticamente pelo id. A Function processa e salva o embedding via output binding. Nenhuma linha de código de conexão, autenticação ou SDK escrita pelo dev.",badge:"zero boilerplate"},
+  {company:"Sistema de notificações",scenario:"Timer trigger para relatórios diários",desc:"Toda manhã às 8h um timer trigger dispara a Function. O input binding do Cosmos DB busca os pedidos das últimas 24h. A Function gera o resumo. O output binding envia o email via SendGrid (binding disponível). Sem cron jobs, sem servidores de agendamento.",badge:"timer + bindings"},
+  {company:"Plataforma de uploads",scenario:"Trigger em Blob para processamento automático",desc:"Usuário faz upload de CSV para o Blob Storage. O blob trigger dispara a Function com o conteúdo do arquivo já injetado via input binding. A Function processa e salva os resultados no Cosmos DB via output binding. O upload é o único passo manual.",badge:"blob trigger"}],
+questions:[
+{q:"Uma Function deve ler mensagem do Service Bus, buscar doc no Cosmos pelo id da mensagem, e salvar resultado. Como minimizar código de infraestrutura?",a:"Trigger de Service Bus + input binding do Cosmos DB (busca o doc pelo id automaticamente) + output binding do Cosmos DB (salva o resultado). Você escreve apenas a lógica de negócio.",why:null},
+{q:"Quantos triggers uma Azure Function pode ter?",a:"Exatamente 1 trigger. Ele define o que dispara a function. Você pode ter múltiplos input e output bindings, mas o trigger é sempre único.",why:null}
+]},
+
+{id:"t21",num:"21",domain:"messaging",week:6,title:"Service Bus vs Event Grid vs Event Hubs vs Queue Storage",tag:"Mensageria · Semana 6",tagColor:"g",
+summary:"A decisão arquitetural mais cobrada do exame. Saber quando usar cada serviço vale mais que conhecer detalhes de cada um.",
+sections:[{title:"Regra de decisão",content:`'Garantia + ordering + transação' → Service Bus
+'Reagir a evento do Azure / fan-out' → Event Grid
+'Streaming alto volume / Kafka compatibility' → Event Hubs
+'Simples, barato, sem requisitos especiais' → Queue Storage`}],
+table:{headers:["","Service Bus","Event Grid","Event Hubs","Queue Storage"],rows:[
+["Modelo","Message broker","Event router","Event streaming","Queue simples"],
+["Garantia","At-least-once","Retry 24h","Retention","At-least-once"],
+["Ordering","Sessions (FIFO)","Não","Por partição","Não"],
+["Msg máxima","100MB (Premium)","1MB","1MB","64KB"],
+["Throughput","Médio","Alto (pequenos)","Muito alto (GB/s)","Baixo"],
+["Caso principal","Jobs, transações","Reagir a eventos Azure","Logs, telemetria, Kafka","Desacoplamento simples"]
+]},
+analogy:null,
+tactic:"Crie um cenário de e-commerce e liste todos os fluxos assíncronos (pedido confirmado, estoque baixo, log de acesso, notificação de promoção). Mapeie cada um para o serviço correto. Exercício de decisão é mais eficaz que memorização.",tacticColor:"g",
+whenuse:{"tip": true, "items": ["<strong>Service Bus</strong>: garantia de entrega, ordering (Sessions), transações, dead-letter, mensagens > 1MB. Para: pedidos, pagamentos, jobs críticos.", "<strong>Event Grid</strong>: reagir a eventos de serviços Azure, fan-out para N handlers, eventos < 1MB, retry com backoff. Para: pipelines event-driven, orquestração de serviços.", "<strong>Event Hubs</strong>: streaming de altíssimo volume (> 100k eventos/s), Kafka compatibility, retenção configurável para replay. Para: telemetria, logs, dados de IoT.", "<strong>Storage Queue</strong>: desacoplamento simples sem requisitos complexos, mensagens < 64KB, custo mínimo. Para: tarefas de background simples, filas internas de baixo volume.", "<strong>Regra de ouro</strong>: se a palavra 'garantia' aparece no requisito → Service Bus. Se a palavra 'evento' e 'N sistemas' aparecem → Event Grid. Se 'milhões de mensagens/segundo' → Event Hubs."]},
+  usecases:[{company:"Plataforma de streaming de dados",scenario:"Ingestão de eventos de cliques de 5M usuários",desc:"5M usuários gerando eventos de cliques, pageviews e interações. Pico de 500.000 eventos/segundo. Event Hubs com 32 partições. Consumido por Azure Stream Analytics para dashboards em tempo real. Service Bus não suportaria esse throughput.",badge:"event hubs streaming"},
+  {company:"Sistema de pedidos",scenario:"Garantia de entrega para pedidos críticos",desc:"Pedido feito → mensagem no Service Bus → sistema de fulfillment processa. Se o fulfillment cai, a mensagem espera no Service Bus com lock. Quando volta, processa normalmente. Event Grid não tem garantia de entrega at-least-once com retry por 24h persistente.",badge:"service bus garantia"},
+  {company:"Plataforma multi-módulos",scenario:"Notificar 6 sistemas ao confirmar pagamento",desc:"Pagamento confirmado → Event Grid topic → 6 subscriptions reagem: email de confirmação, nota fiscal, estoque, pontos de fidelidade, analytics, anti-fraude. Fan-out para N sistemas com um único evento. Service Bus exigiria 6 filas separadas ou um topic com 6 subscriptions de mesmo custo.",badge:"event grid fan-out"}],
+questions:[
+{q:"Sistema IoT envia 2 milhões de eventos/segundo de sensores para um pipeline de ML. Qual serviço?",a:"Azure Event Hubs. Projetado para streaming de altíssimo throughput (GB/s), suporta Kafka protocol e tem partições para processamento paralelo.",why:null},
+{q:"Um pedido de e-commerce deve ser processado por exatamente um sistema de fulfillment. Sem perda possível. Qual serviço?",a:"Azure Service Bus (queue). Garante entrega at-least-once, tem DLQ para falhas, processamento por exatamente um consumer.",why:null},
+{q:"Arquivo criado no Blob Storage. Três Functions diferentes precisam ser notificadas. Qual serviço?",a:"Azure Event Grid. O Blob Storage emite eventos nativamente. Cada Function tem sua própria event subscription. Fan-out automático.",why:null},
+{q:"Desacoplamento simples de tarefas de background. Sem requisito de ordering ou alto throughput. Qual é mais custo-eficiente?",a:"Azure Storage Queue. Para desacoplamento simples sem requisitos complexos é o mais barato.",why:null}
+]},
+
+// ─── SECURITY ───
+{id:"t22",num:"22",domain:"security",week:7,title:"Azure Key Vault",tag:"Segurança · Semana 7",tagColor:"y",
+summary:"Cofre centralizado de secrets, keys e certificados. Com Managed Identity, elimina completamente credenciais hardcoded.",
+sections:[
+{title:"3 tipos de objetos e rotation",content:`Secrets: strings sensíveis (connection strings, API keys, senhas).
+Keys: chaves criptográficas para encrypt/decrypt/sign. Com SKU Premium: HSM — a chave nunca sai do hardware.
+Certificates: TLS/SSL com renovação automática via DigiCert ou Let's Encrypt.
+
+Versioning e Rotation — cai muito:
+Cada save cria uma nova versão. Versões antigas ficam acessíveis mas podem ser desabilitadas.
+
+Rotation sem downtime:
+1. Crie nova credencial no banco/serviço.
+2. Salve como nova versão do secret (mesmo nome).
+3. Apps que buscam getSecret("nome") sem especificar versão usam automaticamente a mais recente.
+4. Desabilite a versão comprometida.
+
+Secret vs Key:
+Secret = valor opaco (string). Você recupera e usa o valor inteiro.
+Key = chave criptográfica. Você pede ao KV para encrypt/decrypt/sign — o valor nunca deixa o cofre.`,
+code:`import { DefaultAzureCredential } from "@azure/identity";
+import { SecretClient } from "@azure/keyvault-secrets";
+
+// DefaultAzureCredential:
+// - No Azure: usa Managed Identity automaticamente
+// - Localmente: usa az login
+// ZERO credencial no código!
+const kv = new SecretClient(
+  "https://meu-vault.vault.azure.net",
+  new DefaultAzureCredential()
+);
+
+// Busca versão mais recente (sem especificar versão)
+// Se rotacionar, pega automaticamente a nova
+const dbUrl    = (await kv.getSecret("database-url")).value!;
+const openaiKey = (await kv.getSecret("openai-key")).value!;
+
+// ❌ NUNCA:
+// const dbUrl = "mongodb+srv://user:password@cluster.mongodb.net/";`,lang:"typescript"}
+],
+analogy:"Key Vault é o cofre de segurança do banco. Seus funcionários (apps) têm chaves do cofre (Managed Identity) para pegar dinheiro (secrets) quando precisam. Você nunca carrega o dinheiro todo no bolso (hardcoded) — só pega o que precisa, com log de tudo.",
+tactic:"Coloque uma connection string no Key Vault e refatore uma app para buscá-la via DefaultAzureCredential. Depois revogue o acesso da Managed Identity e observe o erro 403. Ver 'Forbidden' te ensina como a autorização realmente funciona.",tacticColor:"y",
+whenuse:{"yes": ["Qualquer string sensível que não deve aparecer em código, logs ou portal (connection strings, API keys, senhas)", "Você precisa de rotation de credenciais sem downtime e com histórico de versões", "Chaves criptográficas que nunca devem sair do hardware (use Keys com HSM no SKU Premium)", "Certificados TLS com renovação automática"], "no": ["Configurações não-sensíveis (feature flags, timeouts, nomes de modelos) — use App Configuration", "Você precisa de configuração dinâmica sem restart (Key Vault não tem dynamic refresh nativo — use App Configuration com referência ao KV)", "Dados de aplicação — Key Vault é para segredos, não para armazenar dados de negócio"]},
+  usecases:[{company:"Fintech",scenario:"Rotation de credenciais sem downtime",desc:"Todo trimestre, as credenciais do banco de dados são rotacionadas por compliance. O processo: criar nova senha no banco → salvar nova versão no Key Vault (mesmo nome) → desabilitar versão antiga. As APIs que buscam o secret sem versão específica pegam a nova automaticamente. Zero restart de serviços.",badge:"rotation zero downtime"},
+  {company:"Empresa de saúde",scenario:"Chaves de criptografia em HSM para dados de pacientes",desc:"Dados de prontuários são criptografados com Keys (não Secrets) do Key Vault Premium com HSM. A aplicação pede ao Key Vault para criptografar/descriptografar — a chave nunca sai do hardware. Mesmo que alguém roube o código-fonte, não há chave para decriptar os dados.",badge:"hsm key vault"},
+  {company:"Startup SaaS",scenario:"Auditoria de quem acessou quais secrets",desc:"O Key Vault registra cada acesso a cada secret com: qual identidade acessou, de qual IP, quando e qual versão. O time de segurança detectou que um Container App estava acessando um secret de produção 5.000 vezes/hora (bug de loop) antes que causasse problemas.",badge:"audit log"}],
+questions:[
+{q:"Uma connection string foi vazada. Você precisa rotacioná-la sem interromper o serviço. Como?",a:"1. Crie nova connection string no banco. 2. Salve como nova versão do secret (mesmo nome). 3. Apps sem versão específica usam automaticamente a mais recente. 4. Desabilite a versão comprometida.",why:null},
+{q:"Qual role RBAC atribuir a uma Managed Identity para ler secrets do Key Vault?",a:"Key Vault Secrets User (leitura). Para criar/atualizar: Key Vault Secrets Officer. O role precisa ser atribuído no escopo do Key Vault.",why:null},
+{q:"Qual a diferença entre Secret e Key no Key Vault?",a:"Secret = valor opaco (string) — você recupera e usa o valor inteiro (para connection strings e API keys). Key = chave criptográfica — você pede ao Key Vault para realizar operações criptográficas sem que o valor da chave deixe o cofre.",why:null}
+]},
+
+{id:"t23",num:"23",domain:"security",week:7,title:"Managed Identity",tag:"Segurança · Semana 7",tagColor:"y",
+summary:"A solução para eliminar credenciais do código. O Azure gerencia o service principal automaticamente.",
+sections:[
+{title:"Como funciona e system vs user-assigned",content:`Ao habilitar Managed Identity, o Azure cria um service principal no Entra ID vinculado ao recurso. O recurso obtém tokens OAuth automaticamente sem client_id + client_secret no código.
+
+DefaultAzureCredential detecta automaticamente:
+- No Azure: usa Managed Identity (IMDS endpoint).
+- Localmente: tenta variáveis de ambiente → Azure CLI → VS Code → Azure PowerShell.
+O mesmo código funciona nos dois ambientes sem modificação.
+
+System-assigned: criada e deletada com o recurso. 1 recurso → 1 identity. Simples.
+User-assigned: recurso independente, associada a múltiplos recursos. Ideal para múltiplos serviços com as mesmas permissões.
+
+Role Assignments necessários:
+- Key Vault: Key Vault Secrets User
+- Cosmos DB: Cosmos DB Built-in Data Contributor
+- Service Bus: Azure Service Bus Data Sender/Receiver
+- Storage: Storage Blob Data Contributor
+- ACR: AcrPull`}
+],
+analogy:"Managed Identity é como um crachá corporativo eletrônico. O funcionário (app) não precisa saber a senha do sistema — o crachá (identity) é reconhecido automaticamente. Se demitido (recurso deletado com system-assigned), o crachá é desativado. Vários funcionários podem compartilhar um tipo de crachá (user-assigned).",
+tactic:"Remova TODAS as credenciais de uma app e configure tudo via Managed Identity. Teste localmente com az login. Faça deploy no Azure e veja funcionar sem nenhuma senha em lugar nenhum. Esse momento é revelador.",tacticColor:"y",
+whenuse:{"yes": ["Qualquer recurso Azure que precisa acessar outro serviço Azure sem credenciais hardcoded", "Substitui client_id + client_secret em todo lugar — use DefaultAzureCredential", "Múltiplos serviços com as mesmas permissões (use User-assigned para não duplicar role assignments)", "Ambientes de desenvolvimento: DefaultAzureCredential funciona com az login localmente, sem variáveis de ambiente"], "no": ["Aplicações fora do Azure (on-premises, outras nuvens) — Managed Identity só funciona em recursos Azure", "Cenários onde você precisa de uma identidade para um usuário específico (use Azure AD tokens de usuário)", "Service principals com múltiplos tenants ou acesso cross-subscription complexo — às vezes user-assigned com configuração manual é mais claro"]},
+  usecases:[{company:"Empresa de AI",scenario:"Container App sem nenhuma credencial em código",desc:"O app Node.js usa DefaultAzureCredential. No Azure, usa automaticamente a Managed Identity do Container App para acessar: Key Vault (secrets), Cosmos DB (dados), Service Bus (mensagens) e ACR (imagens). Nenhuma variável de ambiente com senha. O código é idêntico em dev (az login) e produção.",badge:"zero credentials"},
+  {company:"Plataforma multi-tenant",scenario:"5 microservices com as mesmas permissões",desc:"User-assigned Managed Identity criada uma vez com roles: Key Vault Secrets User, Cosmos DB Built-in Data Contributor e Service Bus Data Sender. Associada aos 5 Container Apps. Quando um novo serviço é criado, é só associar a mesma identity — sem criar novos roles.",badge:"user-assigned"},
+  {company:"Pipeline de dados",scenario:"Azure Function acessando PostgreSQL privado",desc:"Function no plano Premium com VNet integration. Managed Identity tem role no PostgreSQL Flexible Server. A connection string do banco fica no Key Vault — a Function a busca via DefaultAzureCredential. Nenhuma senha em código, variável de ambiente ou configuração do App Service.",badge:"sem senha no código"}],
+questions:[
+{q:"Como uma Container App acessa o Cosmos DB sem nenhuma credencial no código?",a:"1. Habilite Managed Identity (system-assigned) na Container App. 2. Atribua o role 'Cosmos DB Built-in Data Contributor' à identity. 3. Use DefaultAzureCredential no código. Nenhuma chave necessária.",why:null},
+{q:"5 Container Apps precisam das mesmas permissões no Key Vault e Service Bus. Qual tipo de Managed Identity?",a:"User-assigned Managed Identity. Crie uma identity, atribua os roles necessários, e associe essa mesma identity a todos os 5 Container Apps.",why:null},
+{q:"Como DefaultAzureCredential autentica no Azure vs localmente?",a:"No Azure: usa automaticamente a Managed Identity do recurso (IMDS endpoint). Localmente: tenta variáveis de ambiente → Azure CLI (az login) → VS Code credentials → Azure PowerShell. O mesmo código funciona nos dois ambientes.",why:null}
+]},
+
+{id:"t24",num:"24",domain:"security",week:7,title:"Azure App Configuration",tag:"Segurança · Semana 7",tagColor:"y",
+summary:"Configurações centralizadas e feature flags. Complementa o Key Vault — KV guarda segredos, App Config guarda configurações e flags.",
+sections:[
+{title:"Labels, Feature Flags e Dynamic Refresh",content:`Labels para múltiplos ambientes:
+Mesma chave com valores diferentes por label. 'max-tokens | dev = 100' e 'max-tokens | prod = 4000'. A app busca com seu label de ambiente. Sem arquivos .env por ambiente.
+
+Feature Flags:
+- On/Off: habilitar/desabilitar para todos sem deploy.
+- Percentage filter: habilitar para X% dos usuários (canary release).
+- Targeting filter: habilitar para grupos específicos.
+- Time window: habilitar apenas em horários definidos.
+
+Dynamic Refresh + Sentinel key:
+A app verifica mudanças periodicamente (sem restart). A sentinel key — quando alterada, a app detecta e recarrega todas as configurações.
+
+Key Vault vs App Config:
+Key Vault: dados SENSÍVEIS (passwords, connection strings, API keys).
+App Config: configurações NÃO-sensíveis (feature flags, timeouts, model names, thresholds).`}
+],
+analogy:"App Configuration é o painel de controle do avião. Não guarda combustível (segredos = Key Vault) — guarda os botões e switches que controlam o comportamento. Você pode mudar o comportamento em voo (dynamic refresh) sem pousar (restart).",
+tactic:"Implemente uma feature flag 'new-rag-pipeline' e controle qual pipeline de RAG seu app usa. Mude o valor no portal sem fazer redeploy e observe o comportamento mudar em tempo real.",tacticColor:"y",
+whenuse:{"yes": ["Configurações que mudam sem precisar de redeploy (dynamic refresh + sentinel key)", "Feature flags para rollout gradual (percentage filter, targeting filter por grupo)", "Configurações diferentes por ambiente (dev/staging/prod) via labels — sem múltiplos arquivos .env", "Separação de configuração do código: time de ops altera configurações sem acesso ao repositório"], "no": ["Dados sensíveis (passwords, API keys) — use Key Vault", "Configurações que raramente mudam e estão bem em variáveis de ambiente — adicionar App Config adiciona latência e dependência de serviço externo na inicialização", "Apps muito simples com poucas configs — o overhead de configurar App Configuration não compensa"]},
+  usecases:[{company:"Plataforma de AI",scenario:"Feature flag para rollout gradual do GPT-4o",desc:"A migração do GPT-3.5 para o GPT-4o é cara. Criaram uma feature flag 'use-gpt4o' com percentage filter de 10%. Os 10% de usuários selecionados usam GPT-4o, os outros usam GPT-3.5. Após validar qualidade e custo, aumentaram para 50%, depois 100% — sem nenhum redeploy.",badge:"percentage rollout"},
+  {company:"Sistema de e-commerce",scenario:"Configurações dinâmicas para Black Friday",desc:"30 minutos antes da Black Friday, um engenheiro muda 'max-concurrent-orders' de 100 para 5000 no App Configuration. Com dynamic refresh, todos os Container Apps detectam a mudança em 30 segundos sem restart. Impossível com variáveis de ambiente (exigiria redeploy).",badge:"dynamic refresh"},
+  {company:"App de finanças",scenario:"Configurações diferentes para dev/prod sem .env",desc:"Labels no App Configuration: 'openai-model | dev = gpt-3.5-turbo' e 'openai-model | prod = gpt-4o'. A app lê a config com o label do seu ambiente. Um único repositório sem arquivos .env diferentes por ambiente. Nenhum dev acessa acidentalmente configs de produção.",badge:"labels por ambiente"}],
+questions:[
+{q:"Você quer lançar um novo modelo de AI para 10% dos usuários sem novo deploy. Como?",a:"App Configuration feature flag com Percentage filter configurado para 10%. O SDK verifica se a feature está habilitada para o usuário atual antes de usar o novo modelo.",why:null},
+{q:"Como atualizar max-tokens de 1000 para 4000 em produção sem reiniciar os Container Apps?",a:"App Configuration com dynamic refresh + sentinel key. Atualize o valor no portal. Atualize a sentinel key. As apps detectam a mudança na próxima verificação e recarregam sem restart.",why:null}
+]},
+
+// ─── OBSERVABILITY ───
+{id:"t25",num:"25",domain:"observability",week:8,title:"OpenTelemetry",tag:"Observabilidade · Semana 8",tagColor:"y",
+summary:"Padrão open-source de observabilidade. Substitui o SDK proprietário do Application Insights. Novo vs AZ-204.",
+sections:[
+{title:"Os 3 pilares e Context Propagation",content:`Trace: caminho completo de uma request pelo sistema distribuído. Contém múltiplos spans, correlacionados por um traceId único.
+
+Span: operação com duração (início, fim, nome, status, atributos). Spans são aninhados — o span pai (HTTP request) contém spans filhos (query ao banco, chamada ao OpenAI).
+
+Metric: medida numérica ao longo do tempo. Contador, gauge, histograma.
+
+Log: evento discreto. O OTel conecta logs a traces automaticamente via traceId/spanId.
+
+Context propagation: o traceId viaja entre serviços via header HTTP 'traceparent' (W3C Trace Context). Permite correlacionar todos os spans de uma request que passou por 5 serviços.
+
+OpenTelemetry vs SDK do Application Insights:
+SDK do AppInsights: proprietário da Microsoft, só envia para Azure Monitor.
+OpenTelemetry: open-source, vendor-neutral — envia para Azure Monitor, Jaeger, Datadog. É o padrão da indústria.`,
+code:`// telemetry.ts — importe ANTES de qualquer outro import
+import { NodeSDK } from "@opentelemetry/sdk-node";
+import { AzureMonitorTraceExporter } from "@azure/monitor-opentelemetry-exporter";
+import { getNodeAutoInstrumentations } from "@opentelemetry/auto-instrumentations-node";
+import { Resource } from "@opentelemetry/resources";
+
+const sdk = new NodeSDK({
+  resource: new Resource({ "service.name": "ai-api" }),
+  traceExporter: new AzureMonitorTraceExporter({
+    connectionString: process.env.APPLICATIONINSIGHTS_CONNECTION_STRING
+    // Sempre Connection String — nunca Instrumentation Key (legado)
+  }),
+  instrumentations: [getNodeAutoInstrumentations()]
+  // Auto-instrumenta: Express, HTTP, pg, redis, @azure/cosmos
+});
+sdk.start();
+
+// Span customizado para operações importantes
+import { trace, SpanStatusCode } from "@opentelemetry/api";
+const tracer = trace.getTracer("ai-api");
+
+async function tracedVectorSearch(emb: number[]) {
+  return tracer.startActiveSpan("pg.vector_search", async (span) => {
+    span.setAttributes({ "vector.dimensions": emb.length });
+    try {
+      const results = await vectorSearch(emb);
+      span.setStatus({ code: SpanStatusCode.OK });
+      return results;
+    } catch (e) {
+      span.setStatus({ code: SpanStatusCode.ERROR, message: String(e) });
+      throw e;
+    } finally {
+      span.end(); // SEMPRE no finally!
+    }
+  });
+}`,lang:"typescript"}
+],
+analogy:"OpenTelemetry é como o sistema de rastreamento dos Correios. Cada encomenda (request) recebe um código de rastreio (traceId). Cada entregador que toca a encomenda (serviço) registra onde ela estava e quanto tempo ficou (spans). Você vê o percurso completo de ponta a ponta.",
+tactic:"Instrumente uma API com getNodeAutoInstrumentations() e faça algumas requests. No Application Insights, abra o Application Map e o End-to-end transaction. Ver o trace visual de uma request passando por 3 serviços é a melhor explicação possível de distributed tracing.",tacticColor:"y",
+whenuse:{"yes": ["Você precisa rastrear o caminho completo de uma request em um sistema distribuído (múltiplos serviços, Functions, DBs)", "Você quer instrumentar Node.js automaticamente sem escrever código de trace para cada biblioteca", "Você precisa de vendor-neutral observability (exportar para Azure Monitor E/OU Datadog/Jaeger)", "Medir latência de operações específicas como vector search, chamadas ao OpenAI, queries ao banco"], "no": ["Você tem um app monolítico simples onde Application Insights SDK clássico já está funcionando — migrar não traz benefício imediato", "Você só precisa de métricas básicas de HTTP — o Azure Monitor já coleta automaticamente sem instrumentação manual"]},
+  usecases:[{company:"Plataforma de AI",scenario:"Rastrear latência de chamadas ao Azure OpenAI",desc:"Com getNodeAutoInstrumentations(), todas as chamadas HTTP para o Azure OpenAI são trackeadas automaticamente. No Application Insights, o dev vê: a request HTTP chegou (span pai), gerou embedding em 120ms (span filho), fez vector search em 8ms (span filho), chamou o LLM em 1.2s (span filho). Visibilidade total do pipeline de RAG.",badge:"distributed tracing"},
+  {company:"Fintech com microservices",scenario:"Correlacionar erro em 1 de 7 serviços",desc:"Usuário reporta erro ao fazer transferência. O suporte pega o traceId do log de erro do usuário. No Log Analytics: union requests, dependencies, exceptions | where operation_Id == traceId. Em 2 minutos, o dev vê que o erro aconteceu exatamente no serviço de compliance, no span 'db.query', com mensagem 'deadlock detected'.",badge:"end-to-end trace"},
+  {company:"Sistema de RAG",scenario:"Medir custo de tokens por operação",desc:"Span customizado no pipeline RAG envia custom metric 'llm.tokens_used' com o valor de tokens de cada chamada ao OpenAI. No Application Insights, uma query KQL mostra tokens por hora, por endpoint, por modelo. O time identifica quais tipos de pergunta consomem mais tokens e otimiza os prompts.",badge:"custom metrics"}],
+questions:[
+{q:"Qual exporter usar para enviar dados do OpenTelemetry para o Application Insights?",a:"AzureMonitorTraceExporter do pacote @azure/monitor-opentelemetry-exporter. Configure com Connection String do Application Insights (não o Instrumentation Key legado).",why:null},
+{q:"Uma request HTTP passa por 3 microservices. Como correlacionar tudo em um único trace?",a:"Context propagation via header traceparent (W3C Trace Context). O OpenTelemetry propaga automaticamente o traceId entre serviços via headers HTTP.",why:null},
+{q:"Qual a principal diferença entre OpenTelemetry e o SDK proprietário do Application Insights?",a:"SDK do AppInsights é proprietário (só envia para Azure Monitor). OpenTelemetry é open-source e vendor-neutral — você pode enviar para Azure Monitor, Jaeger, Datadog, ou qualquer backend OTLP.",why:null}
+]},
+
+{id:"t26",num:"26",domain:"observability",week:8,title:"KQL — Kusto Query Language",tag:"Observabilidade · Semana 8",tagColor:"y",
+summary:"Linguagem de query do Azure Monitor e Log Analytics. Você precisa escrever e interpretar queries para analisar logs em produção.",
+sections:[
+{title:"Operadores essenciais e tabelas",content:`Tabelas do Application Insights:
+- requests: requests HTTP recebidas. Campos: name, duration, success, resultCode.
+- dependencies: chamadas externas (banco, APIs, Service Bus). Campos: target, name, duration, success, type.
+- exceptions: exceções. Campos: type, outerMessage, details.
+- traces: logs da app. Campos: message, severityLevel.
+- customMetrics: métricas do OpenTelemetry.
+
+Operadores essenciais:
+- where: filtrar. Ex: where success == false
+- summarize: agregar. Ex: summarize count(), avg(duration) by name
+- project: selecionar colunas.
+- top N by / order by: ordenar.
+- ago(1h): tempo relativo. Ex: where timestamp > ago(24h)
+- bin(timestamp, 5m): agrupar em buckets de tempo.
+- render timechart: visualizar como gráfico.
+- union: combinar tabelas. Ex: union requests, dependencies.
+- countif: contar com condição.`,
+code:`// 1. Taxa de erro por endpoint (últimas 24h)
+requests
+| where timestamp > ago(24h)
+| summarize total=count(), erros=countif(success==false) by name
+| extend taxaErro = (erros * 100.0 / total)
+| order by taxaErro desc
+
+// 2. Latência P50/P95/P99 por hora
+requests
+| where timestamp > ago(6h)
+| summarize p50=percentile(duration,50),
+            p95=percentile(duration,95),
+            p99=percentile(duration,99)
+  by bin(timestamp,1h)
+| render timechart
+
+// 3. Rastrear request por operationId (trace distribuído)
+let op = "abc123traceId";
+union requests, dependencies, exceptions, traces
+| where operation_Id == op
+| order by timestamp asc
+
+// 4. Top 5 dependências com mais falhas
+dependencies
+| where timestamp > ago(1h) and success == false
+| summarize falhas=count() by target, type
+| top 5 by falhas
+
+// 5. Exceções recentes
+exceptions
+| where timestamp > ago(1h)
+| project timestamp, type, outerMessage
+| order by timestamp desc | take 20
+
+// 6. Tokens LLM por hora (custom metric do OpenTelemetry)
+customMetrics
+| where name == "llm.tokens_used"
+| summarize tokens=sum(value) by bin(timestamp,1h)
+| render columnchart`,lang:"kql"}
+],
+analogy:"KQL é como SQL, mas para logs. Se você sabe SELECT, WHERE, GROUP BY, você já sabe 70% do KQL. O pipe (|) substitui o encadeamento de CTEs — cada operador transforma o resultado do anterior.",
+tactic:"Abra o Log Analytics no portal Azure e execute as 6 queries acima. Depois tente escrever do zero: 'quais são os 3 endpoints mais lentos desta semana?' sem olhar as respostas. Escrever é mais eficaz que ler.",tacticColor:"y",
+whenuse:{"yes": ["Investigar lentidão ou erros reportados por usuários (buscar por operationId para ver o trace completo)", "Criar alertas baseados em métricas customizadas (p95 de latência, taxa de erro, tokens consumidos)", "Analisar padrões de uso: quais endpoints são mais usados, quais são mais lentos, qual horário tem mais carga", "Auditar custos de IA: somar tokens consumidos por endpoint, por modelo, por período"], "no": ["Você só quer ver métricas básicas de disponibilidade — o portal do Application Insights já tem dashboards visuais prontos", "Análises muito simples de um único campo — o portal tem filtros visuais que são mais rápidos que escrever KQL"]},
+  usecases:[{company:"E-commerce",scenario:"Investigar lentidão relatada por usuários",desc:"Usuários reclamam de lentidão no checkout. Query KQL: requests | where name contains 'checkout' | summarize p95=percentile(duration,95) by bin(timestamp,10m) | render timechart. O gráfico mostra pico de 8 segundos às 14h. Cruzando com dependencies, o culpado é a query de validação de cupom sem índice.",badge:"latency analysis"},
+  {company:"Plataforma de AI",scenario:"Monitorar custo de tokens em tempo real",desc:"customMetrics | where name == 'llm.tokens_used' | summarize total=sum(value) by bin(timestamp,1h) | render columnchart. O time vê que às 16h o consumo dobrou. Cruzando com requests, identificam um novo endpoint que não usa semantic cache — gerando chamadas duplicadas ao OpenAI.",badge:"cost monitoring"},
+  {company:"Sistema de pagamentos",scenario:"Rastrear transação específica com erro",desc:"Cliente reporta que transferência 'TXN-9812' falhou. Query: union requests, dependencies, exceptions | where operation_Id == 'TXN-9812' | order by timestamp asc. Em 30 segundos, o dev vê toda a sequência: a request chegou, a validação passou, o erro aconteceu na hora de escrever no banco — 'constraint violation no campo account_id'.",badge:"transaction trace"}],
+questions:[
+{q:"Escreva uma query KQL para encontrar os 3 endpoints com maior latência média nas últimas 2 horas.",a:"requests | where timestamp > ago(2h) | summarize avgDuration = avg(duration) by name | top 3 by avgDuration desc",why:null},
+{q:"Um usuário reportou lentidão em uma request específica (operationId: 'xyz789'). Como ver todo o trace distribuído?",a:"union requests, dependencies, exceptions | where operation_Id == 'xyz789' | order by timestamp asc — mostra todos os spans em ordem cronológica.",why:null},
+{q:"Qual tabela do Application Insights ver chamadas que sua API fez para o banco de dados e o Azure OpenAI?",a:"Tabela dependencies. Registra todas as chamadas externas feitas pela app: bancos, APIs HTTP, Service Bus, Redis, etc. Campos: target, name, duration, success, type.",why:null}
+]},
+
+{id:"t27",num:"27",domain:"observability",week:8,title:"Application Insights",tag:"Observabilidade · Semana 8",tagColor:"y",
+summary:"APM do Azure Monitor. Recebe dados do OpenTelemetry e provê dashboards, alertas, Application Map e análise de performance.",
+sections:[
+{title:"Features importantes para o exame",content:`Application Map: mapa visual automático de todas as dependências. Mostra latência média e taxa de erro de cada conexão. O primeiro lugar para ir quando há degradação.
+
+Availability Tests:
+- Standard test: requests HTTP para sua URL de múltiplas regiões Azure a cada 5 min. Alerta quando disponibilidade cai.
+- Custom TrackAvailability: você escreve o teste customizado (ex: fluxo de login completo).
+
+Smart Detection: detecta automaticamente anomalias de performance e falhas.
+
+Live Metrics: stream em tempo real de requests, failures e performance. Para troubleshoot ao vivo.
+
+Sampling: em alto volume, instrumentar 100% gera custo alto.
+Adaptive sampling (padrão): ajusta automaticamente baseado no volume.
+Atenção: pode omitir erros raros.
+
+Connection String vs Instrumentation Key:
+Use sempre Connection String via APPLICATIONINSIGHTS_CONNECTION_STRING. O Instrumentation Key é legado e será depreciado.`}
+],
+analogy:"Application Insights é o painel de controle de um carro de F1. Application Map = visão geral de todos os sistemas. Live Metrics = telemetria ao vivo. Availability Tests = alertas de falha crítica. Smart Detection = mecânico virtual que detecta problemas antes de você notar.",
+tactic:"Configure um Availability Test para sua API e intencionalmente faça retornar 500. Observe o alerta disparar no portal. Depois verifique o Application Map para encontrar qual dependência causou o erro.",tacticColor:"y",
+whenuse:{"yes": ["Você quer um mapa visual de todas as dependências da sua app e onde estão os gargalos (Application Map)", "Monitorar disponibilidade de múltiplas regiões com alertas automáticos (Availability Tests)", "Receber alertas automáticos de anomalias de performance sem configurar métricas manualmente (Smart Detection)", "Ver telemetria em tempo real durante um incidente em produção (Live Metrics)"], "no": ["Você precisa de observabilidade de infraestrutura (VMs, redes, discos) — use Azure Monitor diretamente", "Você precisa de APM para linguagens não suportadas pelo OpenTelemetry — verifique suporte antes"]},
+  usecases:[{company:"SaaS de CRM",scenario:"Detectar degradação de performance antes do cliente reclamar",desc:"Smart Detection do Application Insights detectou que a latência do endpoint /api/contacts aumentou 340% às 02h47. O time recebeu email automático às 02h49. Investigando no Application Map, viram que o Cosmos DB estava lento — um job batch noturno estava consumindo todos os RUs.",badge:"smart detection"},
+  {company:"Fintech",scenario:"Monitorar disponibilidade em múltiplas regiões",desc:"Availability Test com 5 locais (São Paulo, EUA Leste, Europa, Ásia). O alerta dispara se a disponibilidade cair abaixo de 99% em qualquer região. Quando uma falha de rede na Azure afetou São Paulo, o time foi alertado em 3 minutos — antes que usuários brasileiros percebessem.",badge:"availability 5 regions"},
+  {company:"Startup de AI",scenario:"Troubleshoot de pipeline RAG lento em produção",desc:"Application Map mostra: API → OpenAI Embedding (120ms OK), API → PostgreSQL pgvector (2.8s ❌). Clicando na dependência PostgreSQL, vê-se que as queries de vector search estão fazendo seq scan. Causa: índice HNSW não foi criado na tabela de produção (só em staging). Fix: CREATE INDEX + problema resolvido em 4 minutos.",badge:"application map"}],
+questions:[
+{q:"Usuários reportam lentidão mas você não sabe qual serviço está causando. Qual feature verificar primeiro?",a:"Application Map. Mostra visualmente todos os serviços com latência média e taxa de erro. Você identifica rapidamente qual dependência está causando a degradação.",why:null},
+{q:"Como ser alertado se sua API ficar indisponível por mais de 2 minutos de qualquer região do mundo?",a:"Availability test no Application Insights. Configure um Standard test com frequência de 1–5 minutos, de múltiplos locais. Configure alerta quando disponibilidade cair abaixo do threshold.",why:null},
+{q:"Qual a forma correta de configurar o Application Insights — Instrumentation Key ou Connection String?",a:"Connection String via APPLICATIONINSIGHTS_CONNECTION_STRING. É o método moderno recomendado. O Instrumentation Key é legado e será descontinuado.",why:null}
+]}
+];
+
+const DOMAIN_ORDER = [
+  {domain:"containers",label:"Domínio 1 — Containerized Solutions (20–25%)"},
+  {domain:"data",label:"Domínio 2 — AI Data Management Services (25–30%)"},
+  {domain:"messaging",label:"Domínio 3 — Connect & Consume Azure Services (20–25%)"},
+  {domain:"security",label:"Domínio 4 — Secure, Monitor & Troubleshoot (20–25%)"},
+  {domain:"observability",label:"Domínio 4 (cont.) — Monitor & Troubleshoot"},
+];
+const DOMAIN_COLORS = {containers:"#5b8fff",data:"#a78bfa",messaging:"#34d399",security:"#fbbf24",observability:"#fbbf24"};
+const TACTIC_STYLES = {
+  b:{border:"#5b8fff",label:"#5b8fff",bg:"rgba(91,143,255,.06)"},
+  p:{border:"#a78bfa",label:"#a78bfa",bg:"rgba(167,139,250,.06)"},
+  g:{border:"#34d399",label:"#34d399",bg:"rgba(52,211,153,.05)"},
+  y:{border:"#fbbf24",label:"#fbbf24",bg:"rgba(251,191,36,.05)"}
+};
+
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+let doneSet = new Set(JSON.parse(localStorage.getItem("ai200_done")||"[]"));
+let activeId = "t1";
+
+function saveDone(){ localStorage.setItem("ai200_done", JSON.stringify([...doneSet])); }
+
+function updateProgress(){
+  const n = doneSet.size, total = TOPICS.length, pct = Math.round(n/total*100);
+  document.getElementById("progFill").style.width = pct+"%";
+  document.getElementById("progTxt").textContent = n+" / "+total+" · "+pct+"%";
+}
+
+function toggleDone(id){
+  doneSet.has(id) ? doneSet.delete(id) : doneSet.add(id);
+  saveDone(); updateProgress();
+  const btn = document.getElementById("done-"+id);
+  if(btn){ btn.className = "done-btn"+(doneSet.has(id)?" done":""); btn.textContent = doneSet.has(id)?"✓":"○"; }
+  const si = document.getElementById("si-"+id);
+  if(si){ const chk = si.querySelector(".sb-chk"); if(chk){ chk.className="sb-chk"+(doneSet.has(id)?" done":""); chk.textContent=doneSet.has(id)?"✓":""; }}
+}
+
+function goTo(id){ const el=document.getElementById(id); if(el) el.scrollIntoView({behavior:"smooth",block:"start"}); }
+
+function filterSidebar(q){
+  q = q.toLowerCase();
+  document.querySelectorAll(".sb-item").forEach(el=>{
+    const txt = el.getAttribute("data-title")||"";
+    el.style.display = (!q || txt.toLowerCase().includes(q)) ? "flex" : "none";
+  });
+  document.querySelectorAll(".sb-grp").forEach(grp=>{
+    let sib=grp.nextElementSibling, has=false;
+    while(sib&&!sib.classList.contains("sb-grp")){
+      if(sib.style.display!=="none") has=true;
+      sib=sib.nextElementSibling;
+    }
+    grp.style.display = has?"flex":"none";
+  });
+}
+
+function toggleQ(btn){
+  const q = btn.closest(".question");
+  const ans = q.querySelector(".q-ans");
+  const arr = q.querySelector(".q-arr");
+  const open = ans.style.display==="block";
+  ans.style.display = open?"none":"block";
+  arr.style.transform = open?"rotate(0)":"rotate(180deg)";
+}
+
+function copyCode(btn){
+  const pre = btn.closest(".code-wrap").querySelector("pre");
+  navigator.clipboard?.writeText(pre.textContent);
+  btn.textContent="✓ copiado";
+  setTimeout(()=>{ btn.textContent="copiar"; },2000);
+}
+
+// ═══════════════════════════════════════════
+// RENDER SIDEBAR
+// ═══════════════════════════════════════════
+function renderSidebar(){
+  const body = document.getElementById("sbBody");
+  let html="";
+  const groups = {containers:"Containers",data:"AI Data Management",messaging:"Mensageria & Functions",security:"Segurança",observability:"Observabilidade"};
+  const domColors = DOMAIN_COLORS;
+  let prevDomain="";
+  TOPICS.forEach(t=>{
+    if(t.domain!==prevDomain){
+      html+=`<div class="sb-grp"><span>${groups[t.domain]}</span></div>`;
+      prevDomain=t.domain;
+    }
+    const c = domColors[t.domain]||"#5b8fff";
+    html+=`<a class="sb-item${t.id===activeId?" active":""}" id="si-${t.id}" data-title="${t.title}" onclick="goTo('${t.id}')">
+      <span class="sb-chk${doneSet.has(t.id)?" done":""}" onclick="event.stopPropagation();toggleDone('${t.id}')">${doneSet.has(t.id)?"✓":""}</span>
+      <span class="sb-num">${t.num}</span>
+      <span class="sb-dot" style="background:${c}"></span>
+      <span>${t.title}</span>
+    </a>`;
+  });
+  body.innerHTML=html;
+}
+
+// ═══════════════════════════════════════════
+// RENDER TOPIC
+// ═══════════════════════════════════════════
+function renderTopic(t){
+  const tc = {b:"tag-b",p:"tag-p",g:"tag-g",y:"tag-y"}[t.tagColor]||"tag-b";
+  const ts = TACTIC_STYLES[t.tacticColor]||TACTIC_STYLES.b;
+
+  let sectionsHtml="";
+  (t.sections||[]).forEach(sec=>{
+    sectionsHtml+=`<div class="blk-t">${sec.title}</div>
+    <div class="cb"><p>${sec.content.replace(/\n/g,"<br>")}</p></div>`;
+    if(sec.code){
+      sectionsHtml+=`<div class="code-wrap">
+        <div class="code-head">
+          <span class="code-lbl">${sec.lang||"code"}</span>
+          <div class="code-dots">
+            <div class="code-dot" style="background:#f87171"></div>
+            <div class="code-dot" style="background:#fbbf24"></div>
+            <div class="code-dot" style="background:#34d399"></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">copiar</button>
+        </div>
+        <pre>${escHtml(sec.code)}</pre>
+      </div>`;
+    }
+  });
+
+  let tableHtml="";
+  if(t.table){
+    const {headers,rows}=t.table;
+    tableHtml=`<div class="tw"><table>
+      <thead><tr>${headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead>
+      <tbody>${rows.map(r=>`<tr>${r.map((c,i)=>`<td${i===0?' style="color:var(--t);font-weight:600"':''}>${c}</td>`).join("")}</tr>`).join("")}</tbody>
+    </table></div>`;
+  }
+
+  let analogyHtml="";
+  if(t.analogy){
+    analogyHtml=`<div class="analogy"><div class="al">🧠 Analogia para fixar</div><p>${t.analogy}</p></div>`;
+  }
+
+  let tacticHtml="";
+  if(t.tactic){
+    tacticHtml=`<div class="tactic" style="background:${ts.bg};border:1px solid ${ts.border}33;border-left-color:${ts.border};">
+      <div class="tl" style="color:${ts.label};font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;font-family:'JetBrains Mono',monospace;margin-bottom:6px;">🎯 Tática de aprendizado</div>
+      <p>${t.tactic}</p>
+    </div>`;
+  }
+
+  let wuHtml="";
+  if(t.whenuse){
+    const wuc = t.tagColor||"b";
+    const wuStyle = {
+      b:{c:"var(--a)",bg:"rgba(91,143,255,.06)",bor:"rgba(91,143,255,.18)"},
+      p:{c:"var(--a2)",bg:"rgba(167,139,250,.06)",bor:"rgba(167,139,250,.18)"},
+      g:{c:"var(--a3)",bg:"rgba(52,211,153,.05)",bor:"rgba(52,211,153,.18)"},
+      y:{c:"var(--w)",bg:"rgba(251,191,36,.05)",bor:"rgba(251,191,36,.18)"}
+    }[wuc]||{c:"var(--a)",bg:"rgba(91,143,255,.06)",bor:"rgba(91,143,255,.18)"};
+
+    if(t.whenuse.tip){
+      const items = (t.whenuse.items||[]).map(item=>`<li>${item}</li>`).join("");
+      wuHtml=`<div class="blk-t">Quando usar?</div>
+      <div class="wu-single" style="background:${wuStyle.bg};border:1px solid ${wuStyle.bor};">
+        <ul class="wu-list" style="--marker-color:${wuStyle.c}">${items}</ul>
+      </div>`;
+    } else {
+      const yesItems = (t.whenuse.yes||[]).map(i=>`<li>${i}</li>`).join("");
+      const noItems  = (t.whenuse.no||[]).map(i=>`<li>${i}</li>`).join("");
+      wuHtml=`<div class="blk-t">Quando usar?</div>
+      <div class="wu-cols">
+        <div class="wu-col wu-yes">
+          <div class="wu-col-title">✓ Use quando</div>
+          <ul class="wu-list">${yesItems}</ul>
+        </div>
+        <div class="wu-col wu-no">
+          <div class="wu-col-title">✗ Evite quando</div>
+          <ul class="wu-list">${noItems}</ul>
+        </div>
+      </div>`;
+    }
+  }
+
+  let ucHtml="";
+  if(t.usecases&&t.usecases.length){
+    const ucColor=t.tagColor||"b";
+    const ucItems=t.usecases.map(u=>`
+      <div class="uc-card uc-${ucColor}">
+        <div class="uc-company">${u.company}</div>
+        <div class="uc-scenario">${u.scenario}</div>
+        <div class="uc-desc">${u.desc}</div>
+        <span class="uc-badge">${u.badge}</span>
+      </div>`).join("");
+    ucHtml=`<div class="blk-t">Casos de uso reais</div><div class="uc-grid">${ucItems}</div>`;
+  }
+
+  let questionsHtml="";
+  if(t.questions&&t.questions.length){
+    const qItems=t.questions.map((q,i)=>`
+      <div class="question">
+        <button class="q-btn" onclick="toggleQ(this)">
+          <span class="q-n">Q${i+1}</span>
+          <span class="q-text">${q.q}</span>
+          <span class="q-arr">▼</span>
+        </button>
+        <div class="q-ans">
+          <div class="q-ans-box">
+            <div class="q-ans-lbl">✓ Resposta correta</div>
+            <div class="q-ans-txt">${q.a.replace(/`([^`]+)`/g,'<code style="background:var(--cb);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:10px">$1</code>')}</div>
+            ${q.why?`<div class="q-why">${q.why}</div>`:""}
+          </div>
+        </div>
+      </div>`).join("");
+    questionsHtml=`<div class="qs">
+      <div class="qs-head"><span class="qs-lbl">🎯 Questões do exame</span><span class="qs-badge">${t.questions.length} questões</span></div>
+      ${qItems}
+    </div>`;
+  }
+
+  return `<div class="topic" id="${t.id}">
+    <div class="topic-top">
+      <div class="topic-num">${t.num}</div>
+      <div class="topic-meta">
+        <div class="topic-tag ${tc}">${t.tag}</div>
+        <h2>${t.title}</h2>
+        <p class="topic-sum">${t.summary}</p>
+      </div>
+      <button class="done-btn${doneSet.has(t.id)?" done":""}" id="done-${t.id}" onclick="toggleDone('${t.id}')" title="${doneSet.has(t.id)?"Marcar como não feito":"Marcar como feito"}">${doneSet.has(t.id)?"✓":"○"}</button>
+    </div>
+    ${sectionsHtml}${tableHtml}${analogyHtml}${wuHtml}${ucHtml}${tacticHtml}${questionsHtml}
+  </div>`;
+}
+
+function escHtml(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+// ═══════════════════════════════════════════
+// RENDER MAIN
+// ═══════════════════════════════════════════
+function renderMain(){
+  const main = document.getElementById("main");
+  let html=`
+  <div class="hero">
+    <div class="hero-ey">AI-200 Azure AI Cloud Developer Associate</div>
+    <h1>Guia Completo de Estudos <span>Ponta a Ponta</span></h1>
+    <p class="hero-desc">27 tópicos com explicações, analogias, código comentado e 80+ questões reais. Marque cada tópico como concluído — o progresso é salvo automaticamente.</p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-v">27</div><div class="hstat-l">Tópicos</div></div>
+      <div class="hstat"><div class="hstat-v">80+</div><div class="hstat-l">Questões</div></div>
+      <div class="hstat"><div class="hstat-v">700</div><div class="hstat-l">Nota mínima</div></div>
+      <div class="hstat"><div class="hstat-v">~40h</div><div class="hstat-l">Estudo total</div></div>
+    </div>
+  </div>
+
+  <div class="how-grid">
+    <div class="how-card"><div class="how-icon">📖</div><div class="how-title">Leia a explicação</div><div class="how-desc">Conceito, analogia e por que cada tópico importa</div></div>
+    <div class="how-card"><div class="how-icon">💻</div><div class="how-title">Estude o código</div><div class="how-desc">Cada snippet é funcional e comentado. Reproduza no Azure</div></div>
+    <div class="how-card"><div class="how-icon">🎯</div><div class="how-title">Responda questões</div><div class="how-desc">Tente antes de abrir. Se errar, releia o conceito</div></div>
+    <div class="how-card"><div class="how-icon">✅</div><div class="how-title">Marque como feito</div><div class="how-desc">Checkbox salva progresso no navegador automaticamente</div></div>
+  </div>
+  <div class="box b-y" style="margin-bottom:8px;">
+    <div class="box-lbl">⚡ Tática de estudo recomendada</div>
+    <p>Estude <strong>2–3 tópicos por sessão</strong>, faça as questões, durma, revise no dia seguinte. Espaçamento é mais eficaz que maratona. Após ler, feche e escreva de memória o que aprendeu — isso fixa muito mais que reler.</p>
+  </div>`;
+
+  DOMAIN_ORDER.forEach(({domain,label})=>{
+    const topics = TOPICS.filter(t=>t.domain===domain);
+    html+=`<div class="sec-title">${label}</div>`;
+    topics.forEach(t=>{ html+=renderTopic(t); });
+  });
+
+  html+=`<div class="box b-g" style="margin-top:40px;">
+    <div class="box-lbl">🎉 Próximos passos</div>
+    <p>Após completar todos os tópicos, faça o <strong>Practice Assessment oficial</strong> no Microsoft Learn (gratuito). Anote os tópicos onde errar e volte aqui para revisar. Agende o exame quando estiver acima de 80% nos simulados. Nota mínima: <strong>700/1000</strong>. Boa sorte!</p>
+  </div>
+
+  <div class="sec-title" style="margin-top:52px;">Fontes e recursos oficiais</div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:8px;">
+
+    <a href="https://learn.microsoft.com/credentials/certifications/exams/ai-200/practice/assessment?assessment-type=practice&assessmentId=35" target="_blank" class="res-card res-main">
+      <div class="res-icon">🎯</div>
+      <div class="res-name">Practice Assessment Oficial</div>
+      <div class="res-desc">Microsoft Learn — gratuito, ~40 questões alinhadas ao exame. Faça antes de agendar.</div>
+      <div class="res-tag">microsoft learn</div>
+    </a>
+
+    <a href="https://learn.microsoft.com/credentials/certifications/azure-ai-cloud-developer-associate/" target="_blank" class="res-card">
+      <div class="res-icon">📋</div>
+      <div class="res-name">Página da Certificação AI-200</div>
+      <div class="res-desc">Informações oficiais, skills medidos, como agendar o exame.</div>
+      <div class="res-tag">microsoft learn</div>
+    </a>
+
+    <a href="https://learn.microsoft.com/credentials/certifications/resources/study-guides/ai-200" target="_blank" class="res-card">
+      <div class="res-icon">📖</div>
+      <div class="res-name">Study Guide Oficial AI-200</div>
+      <div class="res-desc">Lista completa de tópicos medidos no exame, atualizada pela Microsoft.</div>
+      <div class="res-tag">microsoft learn</div>
+    </a>
+
+    <a href="https://learn.microsoft.com/azure/cosmos-db/nosql/vector-search" target="_blank" class="res-card">
+      <div class="res-icon">🔭</div>
+      <div class="res-name">Cosmos DB Vector Search</div>
+      <div class="res-desc">Documentação oficial — DiskANN, VectorDistance(), embeddings e indexing policy.</div>
+      <div class="res-tag">docs azure</div>
+    </a>
+
+    <a href="https://learn.microsoft.com/azure/postgresql/flexible-server/how-to-use-pgvector" target="_blank" class="res-card">
+      <div class="res-icon">🐘</div>
+      <div class="res-name">pgvector no Azure PostgreSQL</div>
+      <div class="res-desc">HNSW, IVFFlat, operadores de similaridade e índices para workloads de AI.</div>
+      <div class="res-tag">docs azure</div>
+    </a>
+
+    <a href="https://learn.microsoft.com/azure/container-apps/scale-app" target="_blank" class="res-card">
+      <div class="res-icon">📦</div>
+      <div class="res-name">Container Apps + KEDA</div>
+      <div class="res-desc">Event-driven autoscaling, scalers disponíveis e configuração de scale rules.</div>
+      <div class="res-tag">docs azure</div>
+    </a>
+
+    <a href="https://learn.microsoft.com/azure/azure-functions/functions-overview" target="_blank" class="res-card">
+      <div class="res-icon">⚡</div>
+      <div class="res-name">Azure Functions</div>
+      <div class="res-desc">Hosting plans, triggers, bindings e boas práticas para Node.js.</div>
+      <div class="res-tag">docs azure</div>
+    </a>
+
+    <a href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-messaging-overview" target="_blank" class="res-card">
+      <div class="res-icon">🚌</div>
+      <div class="res-name">Azure Service Bus</div>
+      <div class="res-desc">Filas, topics, sessions, DLQ e padrões de mensageria enterprise.</div>
+      <div class="res-tag">docs azure</div>
+    </a>
+
+    <a href="https://learn.microsoft.com/azure/key-vault/general/overview" target="_blank" class="res-card">
+      <div class="res-icon">🔐</div>
+      <div class="res-name">Azure Key Vault</div>
+      <div class="res-desc">Secrets, keys, certificates, rotation e integração com Managed Identity.</div>
+      <div class="res-tag">docs azure</div>
+    </a>
+
+    <a href="https://opentelemetry.io/docs/languages/js/" target="_blank" class="res-card">
+      <div class="res-icon">📡</div>
+      <div class="res-name">OpenTelemetry para Node.js</div>
+      <div class="res-desc">SDK oficial, auto-instrumentações, exporters e context propagation.</div>
+      <div class="res-tag">opentelemetry.io</div>
+    </a>
+
+    <a href="https://learn.microsoft.com/azure/azure-monitor/logs/log-query-overview" target="_blank" class="res-card">
+      <div class="res-icon">🔍</div>
+      <div class="res-name">KQL — Log Analytics</div>
+      <div class="res-desc">Referência completa de operadores KQL, exemplos e boas práticas.</div>
+      <div class="res-tag">docs azure</div>
+    </a>
+
+    <a href="https://aka.ms/examdemo" target="_blank" class="res-card">
+      <div class="res-icon">🖥️</div>
+      <div class="res-name">Exam Sandbox</div>
+      <div class="res-desc">Ambiente de simulação da Microsoft para se familiarizar com o formato do exame.</div>
+      <div class="res-tag">microsoft</div>
+    </a>
+
+  </div>`;
+
+
+  html+=`
+  <footer style="margin-top:80px;padding:40px 0 60px;border-top:1px solid var(--bor);display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;">
+    <div style="width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--a),var(--a2));display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#fff;flex-shrink:0;">SC</div>
+    <div>
+      <div style="font-size:17px;font-weight:800;color:var(--t);letter-spacing:-.3px;">Samara Caldas</div>
+      <div style="font-size:11px;color:var(--m);font-family:'JetBrains Mono',monospace;margin-top:3px;">Azure AI-200 · Microsoft Certified</div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+      <a href="https://github.com/samaracaldas" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:5px 12px;border-radius:6px;text-decoration:none;border:1px solid var(--bor2);color:var(--m2);font-family:'JetBrains Mono',monospace;letter-spacing:.04em;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        GitHub
+      </a>
+      <a href="https://www.linkedin.com/in/samara-caldas-1ab88120a/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:5px 12px;border-radius:6px;text-decoration:none;border:1px solid var(--bor2);color:var(--m2);font-family:'JetBrains Mono',monospace;letter-spacing:.04em;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+    </div>
+    <div style="width:32px;height:1px;background:var(--bor2);"></div>
+    <div style="font-size:11px;color:var(--m);font-family:'JetBrains Mono',monospace;line-height:1.8;">
+      Feito por Samara Caldas · 2026<br>
+      Material de estudo pessoal — Microsoft AI-200 Azure AI Cloud Developer
+    </div>
+  </footer>`;
+
+  main.innerHTML=html;
+}
+
+// ═══════════════════════════════════════════
+// SCROLL SPY
+// ═══════════════════════════════════════════
+function initScrollSpy(){
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        activeId=e.target.id;
+        document.querySelectorAll(".sb-item").forEach(el=>el.classList.remove("active"));
+        const si=document.getElementById("si-"+activeId);
+        if(si){ si.classList.add("active"); si.scrollIntoView({block:"nearest"}); }
+      }
+    });
+  },{rootMargin:"-15% 0px -75% 0px"});
+  TOPICS.forEach(t=>{ const el=document.getElementById(t.id); if(el) obs.observe(el); });
+}
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+renderMain();
+renderSidebar();
+updateProgress();
+initScrollSpy();
+
+function toggleSidebar(){
+  const sb = document.getElementById('sidebar');
+  const btn = document.getElementById('sb-toggle');
+  const ov = document.getElementById('sb-overlay');
+  const isOpen = sb.classList.contains('open');
+  sb.classList.toggle('open', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+  ov.classList.toggle('open', !isOpen);
+  document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sb-toggle').classList.remove('open');
+  document.getElementById('sb-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+// Fecha sidebar ao clicar num link (mobile)
+document.addEventListener('click', function(e){
+  const item = e.target.closest('.sb-item');
+  if(item && window.innerWidth <= 760) closeSidebar();
+});
+// Fecha sidebar ao redimensionar para desktop
+window.addEventListener('resize', function(){
+  if(window.innerWidth > 760) closeSidebar();
+});
+
+</script>
+</body>
+</html>
